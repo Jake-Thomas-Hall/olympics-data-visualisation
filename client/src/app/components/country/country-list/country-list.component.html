@@ -1,0 +1,16 @@
+<table>
+    <thead>
+        <th>Code</th>
+        <th>Name</th>
+        <th>Population</th>
+        <th>GDP</th>
+    </thead>
+    <tbody>
+        <tr *ngFor="let country of countries">
+            <td>{{ country.CountryCode }}</td>
+            <td>{{ country.CountryName }}</td>
+            <td>{{ country.CountryPopulation }}</td>
+            <td>{{ country.CountryGDP }}</td>
+        </tr>
+    </tbody>
+</table>
