@@ -6,6 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 import { AppConfigService } from './services/app-config.service';
+import { CountryMedalsComponent } from './components/country-medals/country-medals.component';
 
 export function initialiseApp(appConfig: AppConfigService) {
   return () => appConfig.load();
@@ -13,7 +14,8 @@ export function initialiseApp(appConfig: AppConfigService) {
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    CountryMedalsComponent
   ],
   imports: [
     BrowserModule,

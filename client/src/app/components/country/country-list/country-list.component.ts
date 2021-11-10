@@ -1,8 +1,8 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { CountryService } from 'src/app/services/country.service';
-import { CountryModule } from '../country.module';
-import { Country } from '../models/country';
+import { CountryModule } from '../../country.module';
+import { Country } from '../../models/country';
 
 @Component({
   selector: 'app-country-list',

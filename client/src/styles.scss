@@ -1,1 +1,21 @@
 /* You can add global styles to this file, and also import other style files */
+@font-face {
+    font-family: 'IBM Plex Sans';
+    src: url('/assets/fonts/IBMPlexSans-Regular.woff2');
+}
+
+body {
+    background-color: rgb(27, 27, 27);
+    box-sizing: border-box;
+    color: rgb(223, 223, 223);
+    font-family: 'IBM Plex Sans', Arial, Helvetica, sans-serif;
+}
+
+a {
+    color: #678FFF;
+    text-decoration: none;
+}
+
+a:visited {
+    color: #678FFF;
+}
