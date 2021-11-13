@@ -1,8 +1,38 @@
-<h1>Olympics Data</h1>
-<nav>
-  <ul>
-    <li><a routerLink="" routerLinkActive="active">Home</a></li>
-    <li><a routerLink="/country/list" routerLinkActive="active">List Countries</a></li>
-    <li><a routerLink="/country/medals" routerLinkActive="active">List Countries</a></li>
+<div class="p-3 fixed-top olympic-sidebar-nav border-end collapse show">
+  <a href="/" class="d-flex align-items-center pb-3 mb-3 text-decoration-none border-bottom link-dark">
+    <img src="assets/images/Olympic_rings.png" alt="Olympic logo" height="25" width="50">
+    <span class="ps-2 fs-5 fw-semibold">Olympics Data</span>
+  </a>
+  <ul class="list-unstyled ps-0">
+    <li class="mb-1">
+      <button class="btn btn-toggle align-items-center rounded collapse show" data-bs-toggle="collapse" data-bs-target="#country-collapse" aria-expanded="true">
+        Countries
+      </button>
+      <div class="collapse show" id="country-collapse">
+        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+          <li><a routerLink="/country/list" class="link-dark rounded">List</a></li>
+          <li><a routerLink="/country/medals" class="link-dark rounded">Medals</a></li>
+        </ul>
+      </div>
+    </li>
+    <li class="mb-1">
+      <button class="btn btn-toggle align-items-center rounded collapse" data-bs-toggle="collapse" data-bs-target="#athlete-collapse" aria-expanded="false">
+        Athletes
+      </button>
+      <div class="collapse" id="athlete-collapse">
+        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+          <li><a routerLink="/country/list" class="link-dark rounded">List</a></li>
+          <li><a routerLink="/country/medals" class="link-dark rounded">Medals</a></li>
+        </ul>
+      </div>
+    </li>
+    <li class="border-top my-3"></li>
+    <li class="mb-1">
+      <form ></form>
+      <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" id="themeSwitch" [formControl]="toggle">
+        <label class="form-check-label" for="themeSwitch">Switch Theme</label>
+      </div>
+    </li>
   </ul>
-</nav>
+</div>

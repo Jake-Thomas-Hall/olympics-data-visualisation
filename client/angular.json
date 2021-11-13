@@ -30,14 +30,24 @@
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
-              "src/favicon.ico",
+              "src/favicon.png",
               "src/assets",
               "src/.htaccess"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles/styles.scss",
+              {
+                "input": "src/styles/bootstrap-night.min.css",
+                "inject": false
+              },
+              {
+                "input": "src/styles/bootstrap.min.css",
+                "inject": false
+              }
             ],
-            "scripts": []
+            "scripts": [
+              "./node_modules/bootstrap/dist/js/bootstrap.min.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -99,11 +109,11 @@
             "karmaConfig": "karma.conf.js",
             "inlineStyleLanguage": "scss",
             "assets": [
-              "src/favicon.ico",
+              "src/favicon.png",
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles/styles.scss"
             ],
             "scripts": []
           }

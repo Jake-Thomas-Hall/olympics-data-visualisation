@@ -1,0 +1,51 @@
+.olympic-sidebar-nav {
+    width: 280px;
+    height: 100%;
+}
+
+.light-theme {
+    .olympic-sidebar-nav {
+        .btn-toggle {
+            color: rgba(0, 0, 0, 0.65);
+        }
+
+        .btn-toggle:hover,
+        .btn-toggle:focus {
+            color: rgba(0, 0, 0, 0.85);
+            background-color: #d2f4ea;
+        }
+
+        .btn-toggle-nav a:hover,
+        .btn-toggle-nav a:focus {
+            background-color: #d2f4ea;
+        }
+    }
+}
+
+.dark-theme {
+    .olympic-sidebar-nav {
+        .btn-toggle:hover,
+        .btn-toggle:focus {
+            background-color: #2c3532;
+        }
+
+        .btn-toggle:hover,
+        .btn-toggle:focus {
+            color: #c2c2c2;
+            background-color: #2c3532;
+        }
+
+        .btn-toggle-nav a:hover,
+        .btn-toggle-nav a:focus {
+            background-color: #2c3532;
+        }
+    }
+}
+
+.form-switch input:hover {
+    cursor: pointer;
+}
+
+.content-container:not(.toggled) {
+    margin-left: 280px;
+}

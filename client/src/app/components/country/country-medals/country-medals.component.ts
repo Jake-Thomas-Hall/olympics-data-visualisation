@@ -3,8 +3,8 @@ import { PieChart } from '@amcharts/amcharts5/.internal/charts/pie/PieChart';
 import { PieSeries } from '@amcharts/amcharts5/.internal/charts/pie/PieSeries';
 import am5themes_Dark from '@amcharts/amcharts5/themes/Dark';
 import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
-import am5themes_Micro from "@amcharts/amcharts5/themes/Micro";
 import { Component, OnInit } from '@angular/core';
+import { StyleService } from 'src/app/services/style.service';
 
 @Component({
   selector: 'app-country-medals',
@@ -16,7 +16,7 @@ export class CountryMedalsComponent implements OnInit {
   chart!: PieChart;
   series!: PieSeries;
 
-  constructor() {
+  constructor(private styleService: StyleService) {
   }
 
   ngOnInit(): void {
@@ -36,10 +36,10 @@ export class CountryMedalsComponent implements OnInit {
     this.series = this.chart.series.push(
       PieSeries.new(
         this.root, {
-          valueField: "value",
-          categoryField: "category",
-          fillField: "fill"
-        }
+        valueField: "value",
+        categoryField: "category",
+        fillField: "fill"
+      }
       )
     );
 
@@ -69,5 +69,19 @@ export class CountryMedalsComponent implements OnInit {
           fill: color(0xE67E22)
         }
       ]);
+
+      this.styleService.isDarkTheme.subscribe(value => {
+        if (value) {
+          this.root.setThemes([
+            am5themes_Animated.new(this.root),
+            am5themes_Dark.new(this.root)
+          ]);
+        }
+        else {
+          this.root.setThemes([
+            am5themes_Animated.new(this.root)
+          ]);
+        }
+      })
   }
 }

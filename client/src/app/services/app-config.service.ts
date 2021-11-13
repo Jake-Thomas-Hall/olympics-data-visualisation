@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { AppConfig } from '../shared/models/app-config.model';
+import { AppConfig } from '../models/app-config.model';
 
 @Injectable({
   providedIn: 'root'
@@ -24,5 +24,9 @@ export class AppConfigService {
         }
       });
     });
+  }
+
+  static initialiseAppConfigService(appConfig: AppConfigService) {
+    return () => appConfig.load();
   }
 }

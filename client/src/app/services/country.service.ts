@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Country } from '../components/models/country';
+import { Country } from '../models/country';
 import { AppConfigService } from './app-config.service';
 
 @Injectable({

@@ -6,26 +6,25 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 import { AppConfigService } from './services/app-config.service';
-import { CountryMedalsComponent } from './components/country-medals/country-medals.component';
-
-export function initialiseApp(appConfig: AppConfigService) {
-  return () => appConfig.load();
-}
+import { StyleService } from './services/style.service';
+import { CountryModule } from './components/country/country.module';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    CountryMedalsComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    SharedModule
+    SharedModule,
+    CountryModule
   ],
   providers: [
-    AppConfigService,
-    { provide: APP_INITIALIZER, useFactory: initialiseApp, deps: [AppConfigService], multi: true }
+    AppConfigService, 
+    { provide: APP_INITIALIZER, useFactory: AppConfigService.initialiseAppConfigService, deps: [AppConfigService], multi: true },
+    StyleService,
+    { provide: APP_INITIALIZER, useFactory: StyleService.initialiseStyleService, deps: [StyleService], multi: true }
   ],
   bootstrap: [AppComponent]
 })
