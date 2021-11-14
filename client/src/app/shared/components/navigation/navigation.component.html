@@ -1,38 +1,55 @@
-<div class="p-3 fixed-top olympic-sidebar-nav border-end collapse show">
-  <a href="/" class="d-flex align-items-center pb-3 mb-3 text-decoration-none border-bottom link-dark">
-    <img src="assets/images/Olympic_rings.png" alt="Olympic logo" height="25" width="50">
-    <span class="ps-2 fs-5 fw-semibold">Olympics Data</span>
-  </a>
-  <ul class="list-unstyled ps-0">
-    <li class="mb-1">
-      <form ></form>
-      <div class="form-check form-switch">
-        <input class="form-check-input" type="checkbox" id="themeSwitch" [formControl]="toggle">
-        <label class="form-check-label" for="themeSwitch">Switch Theme</label>
-      </div>
-    </li>
-    <li class="border-top my-3"></li>
-    <li class="mb-1">
-      <button class="btn btn-toggle align-items-center rounded collapse show" data-bs-toggle="collapse" data-bs-target="#country-collapse" aria-expanded="true">
-        Countries
-      </button>
-      <div class="collapse show" id="country-collapse">
-        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-          <li><a routerLink="/country/list" class="link-dark rounded">List</a></li>
-          <li><a routerLink="/country/medals" class="link-dark rounded">Medals</a></li>
-        </ul>
-      </div>
-    </li>
-    <li class="mb-1">
-      <button class="btn btn-toggle align-items-center rounded collapse" data-bs-toggle="collapse" data-bs-target="#athlete-collapse" aria-expanded="false">
-        Athletes
-      </button>
-      <div class="collapse" id="athlete-collapse">
-        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-          <li><a routerLink="/country/list" class="link-dark rounded">List</a></li>
-          <li><a routerLink="/country/medals" class="link-dark rounded">Medals</a></li>
-        </ul>
-      </div>
-    </li>
-  </ul>
+<div class="fixed-top olympic-sidebar-nav bg-white" [ngClass]="{'overlay-sidenav': overlaySidenav}" #sidebarnav>
+  <div class="p-3">
+    <div class="d-flex align-items-center pb-3 mb-3 border-bottom">
+      <a routerLink="" class="d-flex align-items-center text-decoration-none link-dark me-auto">
+        <img src="assets/images/Olympic_rings.png" alt="Olympic logo" height="24" width="50">
+        <span class="ps-2 fs-5 fw-semibold no-wrap">Olympics Data</span>
+      </a>
+      <button class="btn btn-close" type="button" [hidden]="!overlaySidenav" (click)="toggleSidenav()"></button>
+    </div>
+    <ul class="list-unstyled ps-0">
+      <li class="mb-1">
+        <div class="form-check form-switch">
+          <input class="form-check-input" type="checkbox" id="themeSwitch" [formControl]="toggle">
+          <label class="form-check-label no-wrap" for="themeSwitch">Switch Theme</label>
+        </div>
+      </li>
+      <li class="border-top my-3"></li>
+      <li class="mb-1">
+        <button class="btn btn-toggle align-items-center rounded" data-bs-toggle="collapse"
+          data-bs-target="#country-collapse" aria-expanded="true">
+          Countries
+        </button>
+        <div class="collapse show" id="country-collapse">
+          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+            <li><a routerLink="/country/list" class="link-dark rounded">List</a></li>
+            <li><a routerLink="/country/medals" class="link-dark rounded">Medals</a></li>
+          </ul>
+        </div>
+      </li>
+      <li class="mb-1">
+        <button class="btn btn-toggle align-items-center rounded" data-bs-toggle="collapse"
+          data-bs-target="#athlete-collapse" aria-expanded="false">
+          Athletes
+        </button>
+        <div class="collapse" id="athlete-collapse">
+          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+            <li><a routerLink="/country/list" class="link-dark rounded">List</a></li>
+            <li><a routerLink="/country/medals" class="link-dark rounded">Medals</a></li>
+          </ul>
+        </div>
+      </li>
+    </ul>
+  </div>
 </div>
+<nav class="navbar navbar-light bg-light d-block d-lg-none">
+  <div class="container-fluid">
+    <button type="button" class="navbar-toggler me-2" (click)="toggleSidenav()" #togglebutton>
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <a routerLink="" class="d-flex align-items-center text-decoration-none link-dark py-2">
+      <img src="assets/images/Olympic_rings.png" alt="Olympic logo" height="24" width="50">
+      <span class="ps-2 fs-5 fw-semibold">Olympics Data</span>
+    </a>
+  </div>
+</nav>

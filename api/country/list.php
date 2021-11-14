@@ -10,7 +10,7 @@ if ($result = $connection->query($sql)) {
         array_push($countries, $row);
     }
 
-    echo json_encode($countries);
+    echo json_encode($countries, JSON_NUMERIC_CHECK);
 }
 else {
     http_response_code(404);

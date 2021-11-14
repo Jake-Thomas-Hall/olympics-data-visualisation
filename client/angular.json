@@ -36,6 +36,7 @@
             ],
             "styles": [
               "src/styles/styles.scss",
+              "./node_modules/bootstrap-icons/font/bootstrap-icons.css",
               {
                 "input": "src/styles/bootstrap-night.min.css",
                 "inject": false

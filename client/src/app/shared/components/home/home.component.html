@@ -1,0 +1,89 @@
+<div class="p-3 mb-3 rounded-2 border">
+    <div class="row">
+        <div class="col-12 col-md-6 col-lg-7 text-center text-sm-start px-4">
+            <h2 class="display-2">Welcome to Olympic Data</h2>
+            <h3 class="text-muted">A collection of data visualisations for the olympic games</h3>
+            <p class="lead">Data from 1896 to 2014</p>
+        </div>
+        <div class="col-12 col-md-6 col-lg-5">
+            <div class="d-flex justify-content-evenly align-items-center h-100">
+                <i class="bi bi-pie-chart-fill"></i>
+                <i class="bi bi-activity"></i>
+                <i class="bi bi-bar-chart-fill"></i>
+                <i class="bi bi-graph-up"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div>
+    <h3>Featured Visualisations</h3>
+    <p>Todo...</p>
+</div>
+
+<div class="row row-cols-lg-4 row-cols-2 gy-2 gx-2">
+    <div class="col">
+        <div class="p-3 rounded-2 border">
+            <div class="text-center">
+                <h2 class="display-3">{{ homeResponse?.sports }}</h2>
+                <h4 class="text-muted">Sports</h4>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="p-3 rounded-2 border">
+            <div class="text-center">
+                <h2 class="display-3">{{ homeResponse?.athletes }}</h2>
+                <h4 class="text-muted">Athletes</h4>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="p-3 rounded-2 border">
+            <div class="text-center">
+                <h2 class="display-3">{{ homeResponse?.countries }}</h2>
+                <h4 class="text-muted">Countries</h4>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="p-3 rounded-2 border">
+            <div class="text-center">
+                <h2 class="display-3">{{ homeResponse?.years }}</h2>
+                <h4 class="text-muted">Years</h4>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="p-3 rounded-2 border">
+            <div class="text-center">
+                <h2 class="display-3">{{ homeResponse?.medals }}</h2>
+                <h4 class="text-muted">Medals</h4>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="p-3 rounded-2 border">
+            <div class="text-center">
+                <h2 class="display-3">{{ homeResponse?.disciplines }}</h2>
+                <h4 class="text-muted">Disciplines</h4>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="p-3 rounded-2 border">
+            <div class="text-center">
+                <h2 class="display-3">{{ homeResponse?.events }}</h2>
+                <h4 class="text-muted">Events</h4>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="p-3 rounded-2 border">
+            <div class="text-center">
+                <h2 class="display-3">{{ homeResponse?.hostCities }}</h2>
+                <h4 class="text-muted">Host Cities</h4>
+            </div>
+        </div>
+    </div>
+</div>

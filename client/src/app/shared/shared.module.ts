@@ -3,10 +3,12 @@ import { CommonModule } from '@angular/common';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { AppRoutingModule } from '../app-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
   declarations: [
-    NavigationComponent
+    NavigationComponent,
+    HomeComponent
   ],
   imports: [
     CommonModule,
@@ -14,7 +16,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule
   ],
   exports: [
-    NavigationComponent
+    NavigationComponent,
+    HomeComponent
   ]
 })
 export class SharedModule { }

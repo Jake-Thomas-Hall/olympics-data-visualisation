@@ -1,16 +1,31 @@
-<table>
-    <thead>
-        <th>Code</th>
-        <th>Name</th>
-        <th>Population</th>
-        <th>GDP</th>
-    </thead>
-    <tbody>
-        <tr *ngFor="let country of countries">
-            <td>{{ country.CountryCode }}</td>
-            <td>{{ country.CountryName }}</td>
-            <td>{{ country.CountryPopulation }}</td>
-            <td>{{ country.CountryGDP }}</td>
-        </tr>
-    </tbody>
-</table>
+<h1>Country List</h1>
+<p class="lead">Select Country to view visualisations</p>
+<form class="row mb-2">
+    <div class="col-12 col-sm-10 col-md-6 col-lg-4">
+        <div class="form-floating">
+            <input id="filterCountries" class="form-control" type="text" placeholder="United Kingdom" aria-label="Country filter">
+            <label for="filterCountries">Filter by name or code</label>
+        </div>
+    </div>
+</form>
+<div class="table-responsive">
+    <table class="table table-hover table-borderless">
+        <thead>
+            <tr>
+                <th scope="col">Code</th>
+                <th scope="col">Name</th>
+                <th scope="col">Population</th>
+                <th scope="col">GDP</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let country of countries">
+                <td>{{country.CountryCode}}</td>
+                <td>{{country.CountryName}}</td>
+                <td>{{country.CountryPopulation}}</td>
+                <td>{{country.CountryGDP}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+

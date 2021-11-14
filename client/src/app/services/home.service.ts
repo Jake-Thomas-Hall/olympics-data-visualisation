@@ -1,16 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Country } from '../models/country.model';
+import { HomeResponse } from '../models/home-response.model';
 import { AppConfigService } from './app-config.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CountryService {
+export class HomeService {
 
   constructor(private http: HttpClient) { }
 
-  getAll() {
-    return this.http.get<Country[]>(`${AppConfigService.settings.apiEndpoint}/country/list`);
+  get() {
+    return this.http.get<HomeResponse>(`${AppConfigService.settings.apiEndpoint}/home`);
   }
 }
