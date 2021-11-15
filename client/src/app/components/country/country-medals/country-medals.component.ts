@@ -6,6 +6,10 @@ import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
 import am5themes_Responsive from "@amcharts/amcharts5/themes/Responsive";
 import { Component, OnInit } from '@angular/core';
 import { StyleService } from 'src/app/services/style.service';
+import { ActivatedRoute } from '@angular/router';
+import { CountryService } from 'src/app/services/country.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { CountryMedals } from 'src/app/models/country-medals.model';
 
 @Component({
   selector: 'app-country-medals',
@@ -16,8 +20,13 @@ export class CountryMedalsComponent implements OnInit {
   root!: Root;
   chart!: PieChart;
   series!: PieSeries;
+  error: string | null = null;
+  countryMedalsResponse: CountryMedals | null = null;
+  hasNoMedals = false;
 
-  constructor(private styleService: StyleService) {
+  constructor(private styleService: StyleService,
+    private route: ActivatedRoute,
+    private countryService: CountryService) {
   }
 
   ngOnInit(): void {
@@ -58,24 +67,7 @@ export class CountryMedalsComponent implements OnInit {
       tooltipText: '{category} - {value}'
     });
 
-    this.series.data.setAll(
-      [
-        {
-          category: "Gold",
-          value: 2,
-          fill: color(0xFFD700),
-        },
-        {
-          category: "Silver",
-          value: 234,
-          fill: color(0xC0C0C0)
-        },
-        {
-          category: "Bronze",
-          value: 343,
-          fill: color(0xE67E22)
-        }
-      ]);
+
 
     this.styleService.isDarkTheme.subscribe(value => {
       if (value) {
@@ -91,7 +83,52 @@ export class CountryMedalsComponent implements OnInit {
       }
     });
 
-    let legend = this.chart.children.push(Legend.new(this.root, {}));
-    legend.data.setAll(this.series.dataItems);
+    
+
+    this.route.paramMap.subscribe(params => {
+      const id = +params.get('id')!;
+
+      this.countryService.getMedals(id).subscribe({
+        next: value => {
+          this.countryMedalsResponse = value;
+          this.series.data.setAll([]);
+
+          if (value.Medals < 1) {
+            this.hasNoMedals = true;
+            return;
+          }
+
+          if (value.Golds > 0) {
+            this.series.data.push({
+              category: "Gold",
+              value: value.Golds,
+              fill: color(0xFFD700),
+            });
+          }
+
+          if (value.Silvers > 0) {
+            this.series.data.push({
+              category: "Silver",
+              value: value.Silvers,
+              fill: color(0xC0C0C0),
+            });
+          }
+
+          if (value.Bronze > 0) {
+            this.series.data.push({
+              category: "Bronze",
+              value: value.Bronze,
+              fill: color(0xE67E22),
+            });
+          }
+
+          let legend = this.chart.children.push(Legend.new(this.root, {}));
+          legend.data.setAll(this.series.dataItems);
+        },
+        error: (error: HttpErrorResponse) => {
+          this.error = `Country with id ${id} could not be found. HTTP Error response: ${error.status}`;
+        }
+      });
+    });
   }
 }

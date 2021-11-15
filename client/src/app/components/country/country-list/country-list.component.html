@@ -19,7 +19,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let country of countries">
+            <tr *ngFor="let country of countries" [routerLink]="['/', 'country', 'medals', country.CountryID]">
                 <td>{{country.CountryCode}}</td>
                 <td>{{country.CountryName}}</td>
                 <td>{{country.CountryPopulation}}</td>

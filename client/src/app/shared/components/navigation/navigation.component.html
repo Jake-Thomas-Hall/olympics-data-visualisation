@@ -17,10 +17,21 @@
       <li class="border-top my-3"></li>
       <li class="mb-1">
         <button class="btn btn-toggle align-items-center rounded" data-bs-toggle="collapse"
-          data-bs-target="#country-collapse" aria-expanded="true">
+          data-bs-target="#featured-collapse" aria-expanded="true">
+          Featured
+        </button>
+        <div class="collapse show" id="featured-collapse">
+          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+            <li><a [routerLink]="['/', 'country', 'medals', 191]" class="link-dark rounded">United Kingdom Medals</a></li>
+          </ul>
+        </div>
+      </li>
+      <li class="mb-1">
+        <button class="btn btn-toggle align-items-center rounded" data-bs-toggle="collapse"
+          data-bs-target="#country-collapse" aria-expanded="false">
           Countries
         </button>
-        <div class="collapse show" id="country-collapse">
+        <div class="collapse" id="country-collapse">
           <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
             <li><a routerLink="/country/list" class="link-dark rounded">List</a></li>
             <li><a routerLink="/country/medals" class="link-dark rounded">Medals</a></li>

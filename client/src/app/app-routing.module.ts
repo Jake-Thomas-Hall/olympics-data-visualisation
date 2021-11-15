@@ -8,7 +8,7 @@ const routes: Routes = [{
   path: 'country',
     children: [
       { path: 'list', component: CountryListComponent },
-      { path: 'medals', component: CountryMedalsComponent }
+      { path: 'medals/:id', component: CountryMedalsComponent }
     ]
   },
   { path: '', component: HomeComponent }
