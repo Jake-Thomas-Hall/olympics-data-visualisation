@@ -2,14 +2,42 @@
 require __DIR__ . '/../_connect.php';
 
 $country;
-$stmt = $connection->prepare("SELECT C.CountryID, C.CountryName, C.CountryCode, C.CountryPopulation, C.CountryGDP, COUNT(W.MedalID) as Medals, IFNULL(SUM(W.MedalID = 1), 0) as Golds, IFNULL(SUM(W.MedalID = 2), 0) as Silvers, IFNULL(SUM(W.MedalID = 3), 0) as Bronze FROM tbl_wins W LEFT JOIN tbl_athletes A ON W.AthleteID = A.AthleteID LEFT JOIN tbl_countries C on A.CountryID = C.CountryID WHERE C.CountryID = ?");
+$stmt;
+
+$stmt = $connection->prepare(<<<SQL
+    SELECT C.CountryID, C.CountryName, C.CountryCode, C.CountryPopulation, C.CountryGDP, 
+    COUNT(W.MedalID) as Medals, 
+    IFNULL(SUM(W.MedalID = 1), 0) as Golds, 
+    IFNULL(SUM(W.MedalID = 2), 0) as Silvers, 
+    IFNULL(SUM(W.MedalID = 3), 0) as Bronze 
+    FROM tbl_wins W LEFT JOIN tbl_athletes A ON W.AthleteID = A.AthleteID LEFT JOIN tbl_countries C on A.CountryID = C.CountryID 
+    WHERE C.CountryID = ?
+SQL);
+
+if (!empty($_GET['type'])) {
+    $stmt = $connection->prepare(<<<SQL
+    SELECT C.CountryID, C.CountryName, C.CountryCode, C.CountryPopulation, C.CountryGDP, 
+    COUNT(W.MedalID) as Medals, 
+    IFNULL(SUM(W.MedalID = 1), 0) as Golds, 
+    IFNULL(SUM(W.MedalID = 2), 0) as Silvers, 
+    IFNULL(SUM(W.MedalID = 3), 0) as Bronze 
+    FROM tbl_wins W LEFT JOIN tbl_athletes A ON W.AthleteID = A.AthleteID LEFT JOIN tbl_countries C on A.CountryID = C.CountryID 
+    WHERE C.CountryID = ? AND W.WinType = ?
+SQL);
+}
 
 if (empty($_GET["id"])) {
     http_response_code(404);
     die;
 }
 
-$stmt->bind_param("i", $_GET["id"]);
+if (!empty($_GET["type"])) {
+    $stmt->bind_param("is", $_GET["id"], $_GET["type"]);
+}
+else {
+    $stmt->bind_param("i", $_GET["id"]);
+}
+
 $stmt->execute();
 
 $result = $stmt->get_result();

@@ -4,11 +4,13 @@ import { NavigationComponent } from './components/navigation/navigation.componen
 import { AppRoutingModule } from '../app-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HomeComponent } from './components/home/home.component';
+import { BackButtonDirective } from './directives/back-button.directive';
 
 @NgModule({
   declarations: [
     NavigationComponent,
-    HomeComponent
+    HomeComponent,
+    BackButtonDirective
   ],
   imports: [
     CommonModule,
@@ -17,7 +19,8 @@ import { HomeComponent } from './components/home/home.component';
   ],
   exports: [
     NavigationComponent,
-    HomeComponent
+    HomeComponent,
+    BackButtonDirective
   ]
 })
 export class SharedModule { }

@@ -11,8 +11,12 @@ export class CountryService {
 
   constructor(private http: HttpClient) { }
 
-  getMedals(id: number) {
-    let params = new HttpParams().set('id', id);
+  getMedals(id: number, type: string | null = null) {
+    let params = new HttpParams();
+    params = params.append('id', id);
+    if (type) {
+      params = params.append('type', type);
+    }
 
     return this.http.get<CountryMedals>(`${AppConfigService.settings.apiEndpoint}country/medals`, {params: params});
   }
