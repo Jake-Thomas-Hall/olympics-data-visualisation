@@ -29,15 +29,14 @@ export class CountryMedalsComponent implements OnInit {
   type = new FormControl(null);
   routeId: number = 0;
 
-  constructor(private styleService: StyleService,
+  constructor(
+    private styleService: StyleService,
     private route: ActivatedRoute,
     private router: Router,
     private countryService: CountryService) {
   }
 
   ngOnInit(): void {
-
-
     this.root = Root.new('chartdiv');
 
     this.root.setThemes([
