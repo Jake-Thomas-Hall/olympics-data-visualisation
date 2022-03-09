@@ -5,14 +5,7 @@ import { CountryMapComponent } from './components/country/country-map/country-ma
 import { CountryMedalsComponent } from './components/country/country-medals/country-medals.component';
 import { HomeComponent } from './shared/components/home/home.component';
 
-const routes: Routes = [{
-  path: 'country',
-    children: [
-      { path: 'list', component: CountryListComponent },
-      { path: 'medals/:id', component: CountryMedalsComponent },
-      { path: 'map', component: CountryMapComponent}
-    ]
-  },
+const routes: Routes = [
   { path: '', component: HomeComponent }
 ];
 

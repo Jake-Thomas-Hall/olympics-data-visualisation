@@ -1,43 +1,6 @@
-.olympic-sidebar-nav {
-    width: 280px;
-    height: 100%;
-    border: 1;
-
-    &.overlay-sidenav {
-        width: 280px;
-    }
-}
 
 .content-container {
     margin-left: 280px;
-}
-
-@media (max-width: 992px) {
-    .olympic-sidebar-nav {
-        width: 0;
-        transition: width 0.3s;
-        overflow-x: hidden; 
-    }
-
-    .dark-theme div.olympic-sidebar-nav {
-        border-right: none;
-
-        &.overlay-sidenav {
-            border-right: 1px solid #515151;
-        }
-    }
-
-    .light-theme div.olympic-sidebar-nav {
-        border-right: none;
-
-        &.overlay-sidenav {
-            border-right: 1px solid #dee2e6;
-        }
-    }
-
-    .content-container {
-        margin-left: 0;
-    }
 }
 
 .light-theme {
@@ -113,4 +76,37 @@ table.table-hover {
 
 .text-bronze {
     color: #E67E22;
+}
+
+.chart-full-height {
+    width: 100%;
+    height: 90vh;
+}
+
+@media (max-width: 992px) {
+    .dark-theme div.olympic-sidebar-nav {
+        border-right: none;
+
+        &.overlay-sidenav {
+            border-right: 1px solid #515151;
+        }
+    }
+
+    .light-theme div.olympic-sidebar-nav {
+        border-right: none;
+
+        &.overlay-sidenav {
+            border-right: 1px solid #dee2e6;
+        }
+    }
+
+    .content-container {
+        margin-left: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .chart-full-height {
+        height: 60vh;
+    }
 }

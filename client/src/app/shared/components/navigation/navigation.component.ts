@@ -9,16 +9,15 @@ import { StyleService } from 'src/app/services/style.service';
   styleUrls: ['./navigation.component.scss']
 })
 export class NavigationComponent implements OnInit {
-
   toggle = new FormControl();
   overlaySidenav = false;
 
   @ViewChild('sidebarnav') sidebarnavRef!: ElementRef;
   @ViewChild('togglebutton') togglebuttonRef!: ElementRef;
 
-  constructor(private styleService: StyleService,
-    private renderer: Renderer2,
-    private fb: FormBuilder) { }
+  constructor(
+    private styleService: StyleService,
+    private renderer: Renderer2,) { }
   
 
   ngOnInit(): void {
@@ -30,12 +29,6 @@ export class NavigationComponent implements OnInit {
       }
       else {
         this.styleService.loadStyle(StyleType.Light);
-      }
-    });
-
-    this.renderer.listen('window', 'click', (event) => {
-      if (event.path.indexOf(this.togglebuttonRef.nativeElement) === -1 && event.path.indexOf(this.sidebarnavRef.nativeElement) === -1) {
-        this.overlaySidenav = false;
       }
     });
   }
