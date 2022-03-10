@@ -11,8 +11,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { CountryMedals } from 'src/app/models/country-medals.model';
 import { FormControl } from '@angular/forms';
 import { combineLatest } from 'rxjs';
-import { Location } from '@angular/common';
-import { NavigationService } from 'src/app/services/navigation.service';
 
 @Component({
   selector: 'app-country-medals',
