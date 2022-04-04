@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HomeResponse } from 'src/app/models/home-response.model';
+import { HomeResponse } from 'src/app/models/responses/home.response.model';
 import { HomeService } from 'src/app/services/home.service';
 
 @Component({

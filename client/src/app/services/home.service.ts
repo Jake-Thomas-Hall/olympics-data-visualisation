@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HomeResponse } from '../models/home-response.model';
+import { HomeResponse } from '../models/responses/home.response.model';
 import { AppConfigService } from './app-config.service';
 
 @Injectable({
