@@ -1,5 +1,6 @@
 <?php
 require __DIR__ . '/../_connect.php';
+require __DIR__ . '/../_utilities.php';
 
 $countries = [];
 
@@ -10,8 +11,8 @@ if ($result = $connection->query($sql)) {
         array_push($countries, $row);
     }
 
-    echo json_encode($countries, JSON_NUMERIC_CHECK);
+    jsonResponse("List countries success", $countries);
 }
 else {
-    http_response_code(404);
+    jsonErrorResponse(500, "Country list query did not succeed.");
 }

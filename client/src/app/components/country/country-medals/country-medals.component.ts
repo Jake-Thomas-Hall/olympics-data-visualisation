@@ -8,7 +8,7 @@ import { StyleService } from 'src/app/services/style.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CountryService } from 'src/app/services/country.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { CountryMedals } from 'src/app/models/country-medals.model';
+import { CountryMedals } from 'src/app/models/responses/country-medals.response.model';
 import { FormControl } from '@angular/forms';
 import { combineLatest } from 'rxjs';
 
@@ -90,7 +90,7 @@ export class CountryMedalsComponent implements OnInit {
       const type = value.queryParamMap.get('type');
       this.type.setValue(type, {emitEvent: false});
 
-      this.countryService.getMedals(this.routeId, type).subscribe({
+      this.countryService.getMedals({ id: this.routeId, type: type }).subscribe({
         next: value => {
           this.countryMedalsResponse = value;
           this.series.data.setAll([]);

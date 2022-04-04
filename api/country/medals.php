@@ -1,5 +1,6 @@
 <?php
 require __DIR__ . '/../_connect.php';
+require __DIR__ . '/../_utilities.php';
 
 $country;
 $stmt;
@@ -27,8 +28,7 @@ SQL);
 }
 
 if (empty($_GET["id"])) {
-    http_response_code(404);
-    die;
+    jsonErrorResponse(404, "Id not provided.");
 }
 
 if (!empty($_GET["type"])) {
@@ -44,8 +44,7 @@ $result = $stmt->get_result();
 $country = $result->fetch_assoc();
 
 if (empty($country["CountryID"])) {
-    http_response_code(404);
-    die;
+    jsonErrorResponse(404, "Country not found.");
 }
 
-echo json_encode($country, JSON_NUMERIC_CHECK);
+jsonResponse("Country medal summary query succeeded", $country);
