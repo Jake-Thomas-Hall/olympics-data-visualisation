@@ -1,7 +1,12 @@
+export interface CountryListResponse {
+  message: string;
+  data: Country[];
+}
+
 export interface Country {
-    CountryID:         string;
-    CountryName:       string;
-    CountryCode:       string;
-    CountryPopulation: null | string;
-    CountryGDP:        null | string;
+  CountryID: number;
+  CountryName: string;
+  CountryCode: string;
+  CountryPopulation?: number;
+  CountryGDP?: number;
 }

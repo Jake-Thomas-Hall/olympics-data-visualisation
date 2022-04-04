@@ -1,11 +1,6 @@
 <h1>{{countryMedalsResponse?.CountryName}}</h1>
 <h2 class="text-muted">Medal Summary</h2>
-<div class="alert alert-danger" [hidden]="!error">
-    {{ error }}
-</div>
-<div class="alert alert-info" [hidden]="!hasNoMedals">
-    {{countryMedalsResponse?.CountryName}} has no medals recorded for {{type.value === null ? 'all the' : 'the ' + type.value}} games.
-</div>
+
 <p class="lead">Total medals: {{countryMedalsResponse?.Medals}}</p>
 <div class="mb-3">
     <div class="btn-group" role="group" aria-label="Olympic games type select">
@@ -21,5 +16,13 @@
 
     <button appBackButton class="btn btn-secondary ms-3">Back <i class="bi bi-back"></i></button>
 </div>
+
+<div class="alert alert-danger" [hidden]="!error">
+    {{ error }}
+</div>
+<div class="alert alert-info" [hidden]="!hasNoMedals">
+    {{countryMedalsResponse?.CountryName}} has no medals recorded for {{type.value === null ? 'all the' : 'the ' + type.value}} games.
+</div>
+
 <div id="chartdiv" [hidden]="hasNoMedals">
 </div>

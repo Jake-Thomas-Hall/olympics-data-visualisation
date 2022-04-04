@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CountryService } from 'src/app/services/country.service';
-import { Country } from '../../../models/responses/country.response.model';
+import { Country, CountryListResponse } from '../../../models/responses/country.response.model';
 
 @Component({
   selector: 'app-country-list',
@@ -19,7 +19,7 @@ export class CountryListComponent implements OnInit {
   getCountries(): void {
     this.countryService.getAll().subscribe({
       next: (response) => {
-        this.countries = response;
+        this.countries = response.data;
       }
     });
   }

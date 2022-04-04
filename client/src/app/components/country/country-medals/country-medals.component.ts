@@ -8,9 +8,9 @@ import { StyleService } from 'src/app/services/style.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CountryService } from 'src/app/services/country.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { CountryMedals } from 'src/app/models/responses/country-medals.response.model';
 import { FormControl } from '@angular/forms';
 import { combineLatest } from 'rxjs';
+import { CountryMedalSummary } from 'src/app/models/responses/country-medals.response.model';
 
 @Component({
   selector: 'app-country-medals',
@@ -22,7 +22,7 @@ export class CountryMedalsComponent implements OnInit {
   chart!: PieChart;
   series!: PieSeries;
   error: string | null = null;
-  countryMedalsResponse: CountryMedals | null = null;
+  countryMedalsResponse: CountryMedalSummary | null = null;
   hasNoMedals = false;
   type = new FormControl(null);
   routeId: number = 0;
@@ -92,10 +92,10 @@ export class CountryMedalsComponent implements OnInit {
 
       this.countryService.getMedals({ id: this.routeId, type: type }).subscribe({
         next: value => {
-          this.countryMedalsResponse = value;
+          this.countryMedalsResponse = value.data;
           this.series.data.setAll([]);
 
-          if (value.Medals < 1) {
+          if (value.data.Medals < 1) {
             this.hasNoMedals = true;
             return;
           }
@@ -103,26 +103,26 @@ export class CountryMedalsComponent implements OnInit {
             this.hasNoMedals = false;
           }
 
-          if (value.Golds > 0) {
+          if (value.data.Golds > 0) {
             this.series.data.push({
               category: 'Gold',
-              value: value.Golds,
+              value: value.data.Golds,
               fill: color(0xFFD700),
             });
           }
 
-          if (value.Silvers > 0) {
+          if (value.data.Silvers > 0) {
             this.series.data.push({
               category: 'Silver',
-              value: value.Silvers,
+              value: value.data.Silvers,
               fill: color(0xC0C0C0),
             });
           }
 
-          if (value.Bronze > 0) {
+          if (value.data.Bronze > 0) {
             this.series.data.push({
               category: 'Bronze',
-              value: value.Bronze,
+              value: value.data.Bronze,
               fill: color(0xE67E22),
             });
           }

@@ -1,8 +1,9 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CountryMedalsRequest } from '../models/requests/country-medals.request.model';
-import { CountryMedals } from '../models/responses/country-medals.response.model';
-import { Country } from '../models/responses/country.response.model';
+import { CountryAthletesResponse } from '../models/responses/country-athletes.response.model';
+import { CountryMedalSummaryResponse } from '../models/responses/country-medals.response.model';
+import { Country, CountryListResponse } from '../models/responses/country.response.model';
 import { AppConfigService } from './app-config.service';
 
 @Injectable({
@@ -19,10 +20,17 @@ export class CountryService {
       params = params.append('type', requestOptions.type);
     }
 
-    return this.http.get<CountryMedals>(`${AppConfigService.settings.apiEndpoint}country/medals`, {params: params});
+    return this.http.get<CountryMedalSummaryResponse>(`${AppConfigService.settings.apiEndpoint}country/medals`, {params: params});
+  }
+
+  getTopAthletes(countryId: number) {
+    let params = new HttpParams();
+    params = params.append('id', countryId);
+
+    return this.http.get<CountryAthletesResponse>(`${AppConfigService.settings.apiEndpoint}country/athletes`, {params: params});
   }
 
   getAll() {
-    return this.http.get<Country[]>(`${AppConfigService.settings.apiEndpoint}country/list`);
+    return this.http.get<CountryListResponse>(`${AppConfigService.settings.apiEndpoint}country/list`);
   }
 }
