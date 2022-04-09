@@ -1,6 +1,13 @@
+import { Country } from "./country.response.model";
+
 export interface CountryAthletesResponse {
   message: string;
-  data: CountryAthlete[];
+  data: CountryAthleteResponseData;
+}
+
+export interface CountryAthleteResponseData {
+  athletes: CountryAthlete[];
+  country: Country;
 }
 
 export interface CountryAthlete {

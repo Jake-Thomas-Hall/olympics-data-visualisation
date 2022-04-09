@@ -1,14 +1,17 @@
 <?php
 require __DIR__ . '/../_connect.php';
 require __DIR__ . '/../_utilities.php';
+require __DIR__ . '/../_countryService.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "GET") {
     if (empty($_GET["id"])) {
         jsonErrorResponse(404, "Id not provided.");
     }
+
+    $countryService = new CountryService($connection);
     
     $countryAthleteMedalQuery = $connection->prepare(<<<SQL
-        SELECT A.AthleteID, A.AthleteFirstName, A.AthleteLastName, A.AthleteGender, COUNT(W.MedalID) as AthleteMedals,
+        SELECT A.AthleteID, CONCAT(A.AthleteFirstName, ' ', A.AthleteLastName) as AthleteFullName, A.AthleteGender, COUNT(W.MedalID) as AthleteMedals,
         IFNULL(SUM(W.MedalID = 1), 0) as Golds, 
         IFNULL(SUM(W.MedalID = 2), 0) as Silvers, 
         IFNULL(SUM(W.MedalID = 3), 0) as Bronze 
@@ -31,5 +34,8 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
         jsonErrorResponse(404, "Country not found.");
     }
     
-    jsonResponse("Top 15 athletes by country query succeeded", $athletes);
+    jsonResponse("Top 15 athletes by country query succeeded", [
+        'athletes' => $athletes,
+        'country' => $countryService->getCountryById($_GET["id"])
+    ]);
 }

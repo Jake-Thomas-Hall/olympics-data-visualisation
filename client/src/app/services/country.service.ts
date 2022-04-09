@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { CountryMedalsRequest } from '../models/requests/country-medals.request.model';
 import { CountryAthletesResponse } from '../models/responses/country-athletes.response.model';
 import { CountryMedalSummaryResponse } from '../models/responses/country-medals.response.model';
-import { Country, CountryListResponse } from '../models/responses/country.response.model';
+import { CountryListResponse } from '../models/responses/country.response.model';
 import { AppConfigService } from './app-config.service';
 
 @Injectable({

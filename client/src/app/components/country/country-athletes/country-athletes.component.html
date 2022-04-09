@@ -1,0 +1,36 @@
+<h1>{{countryAthletesResponse?.data?.country?.CountryName}}</h1>
+<h2 class="text-muted">Athletes Summary</h2>
+
+<p class="lead">Total athletes: {{countryAthletesResponse?.data?.athletes?.length}}</p>
+<div class="mb-3" [formGroup]="countryAthletesOptionsForm">
+    <div class="btn-group" role="group" aria-label="Weighting selection">
+        <input id="orderCount" type="radio" class="btn-check" formControlName="weighting" [value]="null">
+        <label for="orderCount" class="btn btn-outline-primary">Default (Count)</label>
+    
+        <input id="orderWeighted" type="radio" class="btn-check" formControlName="weighting" [value]="true">
+        <label for="orderWeighted" class="btn btn-outline-primary">Weighted</label>
+    </div>
+
+    <div class="btn-group ms-3" role="group" aria-label="Gender selection">
+        <input id="genderBoth" type="radio" class="btn-check" formControlName="gender" [value]="null">
+        <label for="genderBoth" class="btn btn-outline-primary">Both</label>
+
+        <input id="genderMale" type="radio" class="btn-check" formControlName="gender" [value]="'Male'">
+        <label for="genderMale" class="btn btn-outline-primary">Male</label>
+    
+        <input id="genderFemale" type="radio" class="btn-check" formControlName="gender" [value]="'Female'">
+        <label for="genderFemale" class="btn btn-outline-primary">Female</label>
+    </div>
+
+    <button appBackButton class="btn btn-secondary ms-3">Back <i class="bi bi-back"></i></button>
+</div>
+
+<div class="alert alert-danger" [hidden]="!error">
+    {{ error }}
+</div>
+<div class="alert alert-info" [hidden]="!hasNoAthletes">
+    {{countryAthletesResponse?.data?.country?.CountryName}} has no athletes that have won medals, therefore no record can be displayed.
+</div>
+
+<div id="chartdiv" [hidden]="hasNoAthletes">
+</div>

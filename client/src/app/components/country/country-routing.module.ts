@@ -1,15 +1,19 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CountryListComponent } from './country-list/country-list.component';
+import { CountryMedalListComponent } from './country-medal-list/country-medal-list.component';
 import { CountryMapComponent } from './country-map/country-map.component';
 import { CountryMedalsComponent } from './country-medals/country-medals.component';
+import { CountryAthleteListComponent } from './country-athlete-list/country-athlete-list.component';
+import { CountryAthletesComponent } from './country-athletes/country-athletes.component';
 
 const routes: Routes = [{
   path: 'country',
     children: [
-      { path: 'list', component: CountryListComponent },
+      { path: 'medals', component: CountryMedalListComponent },
+      { path: 'medals/map', component: CountryMapComponent},
       { path: 'medals/:id', component: CountryMedalsComponent },
-      { path: 'map', component: CountryMapComponent}
+      { path: 'athletes', component: CountryAthleteListComponent },
+      { path: 'athletes/:id', component: CountryAthletesComponent }
     ]
   }
 ];
