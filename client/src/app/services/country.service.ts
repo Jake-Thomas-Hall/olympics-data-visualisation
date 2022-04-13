@@ -23,10 +23,7 @@ export class CountryService {
     return this.http.get<CountryMedalSummaryResponse>(`${AppConfigService.settings.apiEndpoint}country/medals`, {params: params});
   }
 
-  getTopAthletes(countryId: number) {
-    let params = new HttpParams();
-    params = params.append('id', countryId);
-
+  getTopAthletes(params: {[x: string]: any;}) {
     return this.http.get<CountryAthletesResponse>(`${AppConfigService.settings.apiEndpoint}country/athletes`, {params: params});
   }
 

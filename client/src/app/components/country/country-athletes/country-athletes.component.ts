@@ -33,7 +33,6 @@ export class CountryAthletesComponent implements OnInit {
   data: any[] = [];
   xAxis!: CategoryAxis<AxisRenderer>;
   yAxis!: ValueAxis<AxisRenderer>;
-  columnSeries: ColumnSeries[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -42,7 +41,7 @@ export class CountryAthletesComponent implements OnInit {
     private route: ActivatedRoute,
     private styleService: StyleService) {
     this.countryAthletesOptionsForm = this.fb.group({
-      weighting: [null],
+      weighted: [null],
       gender: [null]
     });
   }
@@ -74,9 +73,9 @@ export class CountryAthletesComponent implements OnInit {
       renderer: AxisRendererY.new(this.root, {})
     }));
 
-    this.columnSeries.push(this.createSeries('Bronze', 'Bronze', color(0xE67E22)));
-    this.columnSeries.push(this.createSeries('Silver', 'Silvers', color(0xC0C0C0)));
-    this.columnSeries.push(this.createSeries('Gold', 'Golds', color(0xFFD700)));
+    this.createSeries('Bronze', 'Bronze', color(0xE67E22), true);
+    this.createSeries('Silver', 'Silvers', color(0xC0C0C0), true);
+    this.createSeries('Gold', 'Golds', color(0xFFD700), true);
 
     this.chart.appear(1000, 100);
 
@@ -84,12 +83,25 @@ export class CountryAthletesComponent implements OnInit {
       this.router.navigate([], { queryParams: value });
     });
 
-    combineLatest({params: this.route.params, queryParams: this.route.queryParams}).subscribe(value => {
-      this.countryService.getTopAthletes(value.params['id']).subscribe(result => {
+    combineLatest([this.route.params, this.route.queryParams], (params, queryParams) => ({...params, ...queryParams})).subscribe(value => {
+      this.countryAthletesOptionsForm.patchValue(value, { emitEvent: false });
+      this.countryService.getTopAthletes(value).subscribe(result => {
+        if (value['weighted'] === 'true') {
+          if (this.chart.series.length <= 3) {
+            this.createSeries('Weighted', 'Weighted', color(0x953db3), false);
+          }
+        }
+        else {
+          if (this.chart.series.length > 3) {
+            this.chart.series.removeIndex(3).dispose();
+          }
+        }
+
         this.xAxis.data.setAll(result.data.athletes);
-        this.columnSeries.forEach(column => {
-          column.data.setAll(result.data.athletes);
+        this.chart.series.each(series => {
+          series.data.setAll(result.data.athletes);
         });
+
         this.countryAthletesResponse = result;
       });
     });
@@ -109,10 +121,10 @@ export class CountryAthletesComponent implements OnInit {
     });
   }
 
-  private createSeries(name: string, valueField: string, colour: Color): ColumnSeries {
+  private createSeries(name: string, valueField: string, colour: Color, stacked: boolean): ColumnSeries {
     let series = this.chart.series.push(ColumnSeries.new(this.root, {
       name: name,
-      stacked: true,
+      stacked: stacked,
       xAxis: this.xAxis,
       yAxis: this.yAxis,
       valueYField: valueField,

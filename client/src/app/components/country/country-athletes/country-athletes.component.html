@@ -1,28 +1,28 @@
 <h1>{{countryAthletesResponse?.data?.country?.CountryName}}</h1>
 <h2 class="text-muted">Athletes Summary</h2>
 
-<p class="lead">Total athletes: {{countryAthletesResponse?.data?.athletes?.length}}</p>
+<p class="lead mb-1">Total athletes: {{countryAthletesResponse?.data?.athletes?.length}}</p>
 <div class="mb-3" [formGroup]="countryAthletesOptionsForm">
-    <div class="btn-group" role="group" aria-label="Weighting selection">
-        <input id="orderCount" type="radio" class="btn-check" formControlName="weighting" [value]="null">
+    <div class="btn-group me-2 mt-2" role="group" aria-label="Weighting selection">
+        <input id="orderCount" type="radio" class="btn-check" formControlName="weighted" [value]="null">
         <label for="orderCount" class="btn btn-outline-primary">Default (Count)</label>
     
-        <input id="orderWeighted" type="radio" class="btn-check" formControlName="weighting" [value]="true">
+        <input id="orderWeighted" type="radio" class="btn-check" formControlName="weighted" [value]="'true'">
         <label for="orderWeighted" class="btn btn-outline-primary">Weighted</label>
     </div>
 
-    <div class="btn-group ms-3" role="group" aria-label="Gender selection">
+    <div class="btn-group me-2 mt-2" role="group" aria-label="Gender selection">
         <input id="genderBoth" type="radio" class="btn-check" formControlName="gender" [value]="null">
         <label for="genderBoth" class="btn btn-outline-primary">Both</label>
 
-        <input id="genderMale" type="radio" class="btn-check" formControlName="gender" [value]="'Male'">
-        <label for="genderMale" class="btn btn-outline-primary">Male</label>
+        <input id="genderMale" type="radio" class="btn-check" formControlName="gender" [value]="'Men'">
+        <label for="genderMale" class="btn btn-outline-primary">Men</label>
     
-        <input id="genderFemale" type="radio" class="btn-check" formControlName="gender" [value]="'Female'">
-        <label for="genderFemale" class="btn btn-outline-primary">Female</label>
+        <input id="genderFemale" type="radio" class="btn-check" formControlName="gender" [value]="'Women'">
+        <label for="genderFemale" class="btn btn-outline-primary">Women</label>
     </div>
 
-    <button appBackButton class="btn btn-secondary ms-3">Back <i class="bi bi-back"></i></button>
+    <button appBackButton class="btn btn-secondary mt-2">Back <i class="bi bi-back"></i></button>
 </div>
 
 <div class="alert alert-danger" [hidden]="!error">
