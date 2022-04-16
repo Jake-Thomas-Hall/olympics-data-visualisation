@@ -14,7 +14,8 @@ import { AxisRendererX } from '@amcharts/amcharts5/.internal/charts/xy/axes/Axis
 import { ColumnSeries } from '@amcharts/amcharts5/.internal/charts/xy/series/ColumnSeries';
 import { AxisRenderer } from '@amcharts/amcharts5/.internal/charts/xy/axes/AxisRenderer';
 import { CountryService } from 'src/app/services/country.service';
-import { combineLatest } from 'rxjs';
+import { combineLatest, forkJoin } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-country-athletes',
@@ -27,6 +28,8 @@ export class CountryAthletesComponent implements OnInit {
   countryAthletesOptionsForm: FormGroup;
   error?: string;
   hasNoAthletes = false;
+  page = 1;
+  endPage = 1;
 
   root!: Root;
   chart!: XYChart;
@@ -55,7 +58,7 @@ export class CountryAthletesComponent implements OnInit {
       layout: this.root.verticalLayout
     }));
 
-    let xRenderer = AxisRendererX.new(this.root, { minGridDistance: 0});
+    let xRenderer = AxisRendererX.new(this.root, { minGridDistance: 0 });
     xRenderer.labels.template.setAll({
       rotation: -40,
       centerY: p50,
@@ -73,39 +76,78 @@ export class CountryAthletesComponent implements OnInit {
       renderer: AxisRendererY.new(this.root, {})
     }));
 
+    // Create the three main series, series for weighted scores is dynamically added/removed
     this.createSeries('Bronze', 'Bronze', color(0xE67E22), true);
     this.createSeries('Silver', 'Silvers', color(0xC0C0C0), true);
     this.createSeries('Gold', 'Golds', color(0xFFD700), true);
 
-    this.chart.appear(1000, 100);
-
+    // Navigate (query params) on changes to the two form controls.
     this.countryAthletesOptionsForm.valueChanges.subscribe(value => {
-      this.router.navigate([], { queryParams: value });
+      this.router.navigate([], { queryParams: value, queryParamsHandling: 'merge' });
     });
 
-    combineLatest([this.route.params, this.route.queryParams], (params, queryParams) => ({...params, ...queryParams})).subscribe(value => {
+    combineLatest([this.route.params, this.route.queryParams], (params, queryParams) => ({ ...params, ...queryParams })).subscribe(value => {
+      // Set nulls into value so that form gets set correctly in the case of these not being present in query params
+      if (!value['weighted']) {
+        value = {...value, weighted: null};
+      }
+      if (!value['gender']) {
+        value = {...value, gender: null};
+      }
+      // Set values from query params into form, do not emit update - don't want to cause a race condition of endless page reloads :)
       this.countryAthletesOptionsForm.patchValue(value, { emitEvent: false });
-      this.countryService.getTopAthletes(value).subscribe(result => {
-        if (value['weighted'] === 'true') {
-          if (this.chart.series.length <= 3) {
-            this.createSeries('Weighted', 'Weighted', color(0x953db3), false);
-          }
-        }
-        else {
-          if (this.chart.series.length > 3) {
-            this.chart.series.removeIndex(3).dispose();
-          }
-        }
+      // Set the page value, check if page exists, if it does set to value from query param, if not, set to one.
+      this.page = value['page'] ? +value['page'] : 1;
 
-        this.xAxis.data.setAll(result.data.athletes);
-        this.chart.series.each(series => {
-          series.data.setAll(result.data.athletes);
-        });
+      // Peform a forkJoin to perform both query for top 10 and query for all at same time.
+      // Takes advantage of the behaviour of object creation; value of 'page' is overridden with value from query params if present.
+      forkJoin({
+        top10: this.countryService.getTopAthletes(value),
+        all: this.countryService.getTopAthletes({ page: this.page, ...value, all: true })
+      }).subscribe({
+        next: result => {
+          // Remove or add the series for the weighted data depending on the query param for it.
+          if (value['weighted'] === 'true') {
+            if (this.chart.series.length <= 3) {
+              this.createSeries('Weighted', 'Weighted', color(0x953db3), false);
+            }
+          }
+          else {
+            if (this.chart.series.length > 3) {
+              this.chart.series.removeIndex(3).dispose();
+            }
+          }
 
-        this.countryAthletesResponse = result;
+          // Set data into xAxis, and all present series.
+          this.xAxis.data.setAll(result.top10.data.athletes);
+          this.chart.series.each(series => {
+            series.data.setAll(result.top10.data.athletes);
+          });
+
+          // Calculate end page, use ceiling to ensure round number
+          this.endPage = Math.ceil(result.all.data.total! / 25);
+          this.countryAthletesResponse = result.all;
+
+          // If the endpage in query params happens to be more than actually is in the result set, re-navigate to actual end page.
+          if (result.all.data.athletes.length < 1 && this.endPage > 0) {
+            this.router.navigate([], { queryParams: { page: this.endPage }, queryParamsHandling: 'merge' });
+          }
+
+          // Hide or show graph and data depending on if there are actually any athletes.
+          if (result.all.data.total! < 1) {
+            this.hasNoAthletes = true;
+          }
+          else {
+            this.hasNoAthletes = false;
+          }
+        },
+        error: (result: HttpErrorResponse) => {
+          this.error = result.error.message;
+        }
       });
     });
 
+    // Toggle graph between dark/light theme based on style service
     this.styleService.isDarkTheme.subscribe(value => {
       if (value) {
         this.root.setThemes([
@@ -121,6 +163,7 @@ export class CountryAthletesComponent implements OnInit {
     });
   }
 
+  // Helper function for creating series, useful in this case due to necessity for four different series.
   private createSeries(name: string, valueField: string, colour: Color, stacked: boolean): ColumnSeries {
     let series = this.chart.series.push(ColumnSeries.new(this.root, {
       name: name,
@@ -132,12 +175,13 @@ export class CountryAthletesComponent implements OnInit {
       fill: colour
     }));
 
+    // Add tooltip
     series.columns.template.setAll({
       tooltipText: '{name}, {categoryX}: {valueY}',
       tooltipY: percent(10)
     });
-    series.appear();
 
+    // Create bullets for this series.
     series.bullets.push(() => {
       return Bullet.new(this.root, {
         sprite: Label.new(this.root, {
@@ -150,6 +194,7 @@ export class CountryAthletesComponent implements OnInit {
       });
     });
 
+    // Hide bullets (the number on the series) if the series data is zero.
     series.columns.template.onPrivate('height', (height, target) => {
       array.each(target!.dataItem!.bullets!, (bullet) => {
         if (height! > 0) {

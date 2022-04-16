@@ -83,6 +83,18 @@ table.table-hover {
     height: 90vh;
 }
 
+.bg-bronze {
+    background-color: #E67E22;
+}
+
+.bg-silver {
+    background-color: #C0C0C0;
+}
+
+.bg-gold {
+    background-color: #FFD700;
+}
+
 @media (max-width: 992px) {
     .dark-theme div.olympic-sidebar-nav {
         border-right: none;
