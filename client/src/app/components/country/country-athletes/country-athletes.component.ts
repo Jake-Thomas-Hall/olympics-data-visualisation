@@ -87,15 +87,8 @@ export class CountryAthletesComponent implements OnInit {
     });
 
     combineLatest([this.route.params, this.route.queryParams], (params, queryParams) => ({ ...params, ...queryParams })).subscribe(value => {
-      // Set nulls into value so that form gets set correctly in the case of these not being present in query params
-      if (!value['weighted']) {
-        value = {...value, weighted: null};
-      }
-      if (!value['gender']) {
-        value = {...value, gender: null};
-      }
       // Set values from query params into form, do not emit update - don't want to cause a race condition of endless page reloads :)
-      this.countryAthletesOptionsForm.patchValue(value, { emitEvent: false });
+      this.countryAthletesOptionsForm.patchValue({weighted: null, gender: null, ...value}, { emitEvent: false });
       // Set the page value, check if page exists, if it does set to value from query param, if not, set to one.
       this.page = value['page'] ? +value['page'] : 1;
 

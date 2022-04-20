@@ -18,8 +18,8 @@
         </thead>
         <tbody>
             <tr *ngFor="let country of countries$ | async" (click)="selectedCountry.emit(country)">
-                <td>{{country.CountryCode}}</td>
-                <td>{{country.CountryName}}</td>
+                <td appSearchHighlight [searchedPhrase]="countrySearchForm.get('filter')?.value" [content]="country.CountryCode" [classToApply]="'highlight'">{{country.CountryCode}}</td>
+                <td appSearchHighlight [searchedPhrase]="countrySearchForm.get('filter')?.value" [content]="country.CountryName" [classToApply]="'highlight'">{{country.CountryName}}</td>
                 <td>{{country.CountryPopulation}}</td>
                 <td>{{country.CountryGDP}}</td>
             </tr>

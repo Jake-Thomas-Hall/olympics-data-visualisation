@@ -3,7 +3,7 @@
 
 <p class="lead">Total medals: {{countryMedalsResponse?.Medals}}</p>
 <div class="mb-3">
-    <div class="btn-group" role="group" aria-label="Olympic games type select">
+    <div class="btn-group me-2 mt-2" role="group" aria-label="Olympic games type select">
         <input id="gamesTypeAll" type="radio" class="btn-check" [formControl]="type" [value]="null">
         <label for="gamesTypeAll" class="btn btn-outline-primary">All</label>
     
@@ -14,7 +14,9 @@
         <label for="gamesTypeWinter" class="btn btn-outline-primary">Winter</label>
     </div>
 
-    <button appBackButton class="btn btn-secondary ms-3">Back <i class="bi bi-back"></i></button>
+    <a [routerLink]="['/', 'country', 'athletes', countryMedalsResponse?.CountryID]" class="btn btn-secondary me-2 mt-2">Country Athletes summary <i class="bi bi-box-arrow-in-right"></i></a>
+
+    <button appBackButton class="btn btn-danger mt-2">Back <i class="bi bi-back"></i></button>
 </div>
 
 <div class="alert alert-danger" [hidden]="!error">

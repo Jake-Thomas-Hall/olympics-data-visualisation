@@ -5,12 +5,14 @@ import { AppRoutingModule } from '../app-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HomeComponent } from './components/home/home.component';
 import { BackButtonDirective } from './directives/back-button.directive';
+import { SearchHighlightDirective } from './directives/search-highlight.directive';
 
 @NgModule({
   declarations: [
     NavigationComponent,
     HomeComponent,
-    BackButtonDirective
+    BackButtonDirective,
+    SearchHighlightDirective
   ],
   imports: [
     CommonModule,
@@ -20,7 +22,8 @@ import { BackButtonDirective } from './directives/back-button.directive';
   exports: [
     NavigationComponent,
     HomeComponent,
-    BackButtonDirective
+    BackButtonDirective,
+    SearchHighlightDirective
   ]
 })
 export class SharedModule { }

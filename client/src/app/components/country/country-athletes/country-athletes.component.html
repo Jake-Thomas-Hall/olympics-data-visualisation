@@ -22,7 +22,9 @@
         <label for="genderFemale" class="btn btn-outline-primary">Women</label>
     </div>
 
-    <button appBackButton class="btn btn-secondary mt-2">Back <i class="bi bi-back"></i></button>
+    <a [routerLink]="['/', 'country', 'medals', countryAthletesResponse?.data?.country?.CountryID]" class="btn btn-secondary me-2 mt-2">Country Medals summary <i class="bi bi-box-arrow-in-right"></i></a>
+
+    <button appBackButton class="btn btn-danger mt-2">Back <i class="bi bi-back"></i></button>
 </div>
 
 <div class="alert alert-danger" [hidden]="!error">

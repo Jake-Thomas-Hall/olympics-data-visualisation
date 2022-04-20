@@ -9,7 +9,7 @@ class CountryService {
     }
 
     public function getCountryById(int $countryId): array {
-        $countryQuery = $this->connection->prepare("SELECT CountryId, CountryName, CountryCode, CountryPopulation, CountryGDP FROM `tbl_countries` WHERE CountryID = ?;");
+        $countryQuery = $this->connection->prepare("SELECT CountryID, CountryName, CountryCode, CountryPopulation, CountryGDP FROM `tbl_countries` WHERE CountryID = ?;");
         $countryQuery->bind_param("i", $countryId);
         $countryQuery->execute();
 
