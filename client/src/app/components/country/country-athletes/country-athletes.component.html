@@ -66,8 +66,8 @@
     </div>
     <ul class="pagination">
         <li class="page-item disabled"><span class="page-link">Page {{page}} of {{endPage}}</span></li>
-        <li class="page-item"><a class="page-link" [routerLink]="[]" [queryParams]="{ page: 1 }" [queryParamsHandling]="'merge'"><i class="bi bi-chevron-double-left"></i> First</a></li>
-        <li class="page-item" [class.disabled]="page === 1"><a class="page-link" [routerLink]="[]" [queryParams]="{ page: page - 1 }" [queryParamsHandling]="'merge'">Previous</a></li>
+        <li class="page-item"><a class="page-link" [routerLink]="[]" [queryParams]="{ page: null }" [queryParamsHandling]="'merge'"><i class="bi bi-chevron-double-left"></i> First</a></li>
+        <li class="page-item" [class.disabled]="page === 1"><a class="page-link" [routerLink]="[]" [queryParams]="{ page: page - 1 <= 1 ? null : page - 1 }" [queryParamsHandling]="'merge'">Previous</a></li>
         <li class="page-item" [class.disabled]="page >= endPage"><a class="page-link" [routerLink]="[]" [queryParams]="{ page: page + 1 }" [queryParamsHandling]="'merge'">Next</a></li>
         <li class="page-item"><a class="page-link" [routerLink]="[]" [queryParams]="{ page: endPage }" [queryParamsHandling]="'merge'">Last <i class="bi bi-chevron-double-right"></i></a></li>
     </ul>

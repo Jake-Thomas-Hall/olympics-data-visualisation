@@ -27,7 +27,7 @@ export class CountryService {
     return this.http.get<CountryAthletesResponse>(`${AppConfigService.settings.apiEndpoint}country/athletes`, {params: params});
   }
 
-  getAll() {
-    return this.http.get<CountryListResponse>(`${AppConfigService.settings.apiEndpoint}country/list`);
+  getAll(params: {[x: string]: any;}) {
+    return this.http.get<CountryListResponse>(`${AppConfigService.settings.apiEndpoint}country/list`, {params: params});
   }
 }
