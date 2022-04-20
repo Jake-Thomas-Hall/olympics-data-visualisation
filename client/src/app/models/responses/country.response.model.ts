@@ -9,4 +9,5 @@ export interface Country {
   CountryCode: string;
   CountryPopulation?: number;
   CountryGDP?: number;
+  CountryISOalpha2?: string;
 }

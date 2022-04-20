@@ -1,4 +1,4 @@
-<h1>{{countryAthletesResponse?.data?.country?.CountryName}}</h1>
+<h1>{{countryAthletesResponse?.data?.country?.CountryName}} <span class="fi" [class]="'fi-' + (countryAthletesResponse?.data?.country?.CountryISOalpha2 ? countryAthletesResponse?.data?.country?.CountryISOalpha2?.toLowerCase() : 'xx')"></span></h1>
 <h2 class="text-muted">Athletes Summary</h2>
 
 <h3>Top 10 Athletes</h3>

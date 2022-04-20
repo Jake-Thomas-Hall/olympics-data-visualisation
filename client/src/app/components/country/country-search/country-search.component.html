@@ -10,6 +10,7 @@
     <table class="table table-hover table-borderless">
         <thead>
             <tr>
+                <th scope="col"></th>
                 <th scope="col">Code</th>
                 <th scope="col">Name</th>
                 <th scope="col">Population</th>
@@ -18,6 +19,7 @@
         </thead>
         <tbody>
             <tr *ngFor="let country of countries$ | async" (click)="selectedCountry.emit(country)">
+                <td><span class="fi" [class]="'fi-' + (country.CountryISOalpha2 ? country.CountryISOalpha2.toLowerCase() : 'xx')"></span></td>
                 <td appSearchHighlight [searchedPhrase]="countrySearchForm.get('filter')?.value" [content]="country.CountryCode" [classToApply]="'highlight'">{{country.CountryCode}}</td>
                 <td appSearchHighlight [searchedPhrase]="countrySearchForm.get('filter')?.value" [content]="country.CountryName" [classToApply]="'highlight'">{{country.CountryName}}</td>
                 <td>{{country.CountryPopulation}}</td>

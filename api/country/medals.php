@@ -7,7 +7,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
     $stmt;
     
     $stmt = $connection->prepare(<<<SQL
-        SELECT C.CountryID, C.CountryName, C.CountryCode, C.CountryPopulation, C.CountryGDP, 
+        SELECT C.CountryID, C.CountryName, C.CountryCode, C.CountryPopulation, C.CountryGDP, C.CountryISOalpha2, 
         COUNT(W.MedalID) as Medals, 
         IFNULL(SUM(W.MedalID = 1), 0) as Golds, 
         IFNULL(SUM(W.MedalID = 2), 0) as Silvers, 
@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
     
     if (!empty($_GET['type'])) {
         $stmt = $connection->prepare(<<<SQL
-        SELECT C.CountryID, C.CountryName, C.CountryCode, C.CountryPopulation, C.CountryGDP, 
+        SELECT C.CountryID, C.CountryName, C.CountryCode, C.CountryPopulation, C.CountryGDP, C.CountryISOalpha2, 
         COUNT(W.MedalID) as Medals, 
         IFNULL(SUM(W.MedalID = 1), 0) as Golds, 
         IFNULL(SUM(W.MedalID = 2), 0) as Silvers, 

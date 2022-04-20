@@ -1,4 +1,4 @@
-<h1>{{countryMedalsResponse?.CountryName}}</h1>
+<h1>{{countryMedalsResponse?.CountryName}} <span class="fi" [class]="'fi-' + (countryMedalsResponse?.CountryISOalpha2 ? countryMedalsResponse?.CountryISOalpha2?.toLowerCase() : 'xx')"></span></h1>
 <h2 class="text-muted">Medal Summary</h2>
 
 <p class="lead">Total medals: {{countryMedalsResponse?.Medals}}</p>

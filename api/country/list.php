@@ -5,7 +5,7 @@ require __DIR__ . '/../_utilities.php';
 if ($_SERVER["REQUEST_METHOD"] === "GET") { 
     $countries = [];
 
-    $sql = "SELECT CountryID, CountryName, CountryCode, CountryPopulation, CountryGDP FROM tbl_countries";
+    $sql = "SELECT CountryID, CountryName, CountryCode, CountryPopulation, CountryGDP, CountryISOalpha2 FROM tbl_countries";
 
     if (isset($_GET["filter"])) {
         $param = "%{$_GET["filter"]}%";
