@@ -8,6 +8,7 @@ import { SharedModule } from './shared/shared.module';
 import { AppConfigService } from './services/app-config.service';
 import { StyleService } from './services/style.service';
 import { CountryModule } from './components/country/country.module';
+import { AthleteModule } from './components/athlete/athlete.module';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { CountryModule } from './components/country/country.module';
     AppRoutingModule,
     HttpClientModule,
     SharedModule,
-    CountryModule
+    CountryModule,
+    AthleteModule
   ],
   providers: [
     AppConfigService, 

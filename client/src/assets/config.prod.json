@@ -1,3 +1,4 @@
 {
-    "apiEndpoint": "https://ws326200-odm.remote.ac/api/"
+    "apiEndpoint": "https://ws326200-odm.remote.ac/api/",
+    "endpoint": "https://ws326200-odm.remote.ac/"
 }

@@ -4,19 +4,27 @@ require __DIR__ . '/../_utilities.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "GET") {
     if (empty($_GET["year"])) {
-        jsonErrorResponse(404, "Year not provided.");
+        jsonErrorResponse(400, "Year not provided.");
+    }
+
+    $filter = "";
+
+    if (isset($_GET["filter"])) {
+        if ($_GET["filter"] === 'Summer' || $_GET["filter"] === 'Winter') {
+            $filter = "AND W.WinType = '{$_GET["filter"]}'";
+        }
     }
 
     $year = $_GET["year"];
 
     // Join venues, athletes and countries to wins table, group by venue and country so that count will result in the number of athletes being counted
-    $sql = "SELECT C.CountryID, C.CountryName, C.CountryISOalpha2, COUNT(C.CountryID) as TotalAthletes 
+    $sql = "SELECT C.CountryID, C.CountryName, C.CountryISOalpha2, C.CountryCode, COUNT(C.CountryID) as TotalAthletes 
                 FROM tbl_wins as W 
                     INNER JOIN tbl_venues as V on W.VenueID = V.VenueID 
                     INNER JOIN tbl_athletes as A ON W.AthleteID = A.AthleteID 
                     INNER JOIN tbl_countries as C ON A.CountryID = C.CountryID 
-                WHERE V.VenueYear = ? 
-                GROUP BY V.VenueID, C.CountryID 
+                WHERE V.VenueYear = ? $filter 
+                GROUP BY V.VenueYear, C.CountryID 
                 ORDER BY TotalAthletes DESC";
 
     $athletesByYearQuery = $connection->prepare($sql);

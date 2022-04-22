@@ -5,7 +5,7 @@ require __DIR__ . '/../_countryService.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "GET") {
     if (empty($_GET["id"])) {
-        jsonErrorResponse(404, "Id not provided.");
+        jsonErrorResponse(400, "Id not provided.");
     }
 
     $countryService = new CountryService($connection);

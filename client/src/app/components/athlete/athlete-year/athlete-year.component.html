@@ -1,0 +1,58 @@
+<h1>Athletes by Year</h1>
+<h2 class="text-muted">Number of athletes participating by year, separated by Country</h2>
+
+<div class="my-2 row row-cols-md-auto g-3 align-items-center" [formGroup]="athleteYearOptionsForm">
+    <div class="col-12">
+        <select id="year" class="form-select" aria-label="Select year" formControlName="year">
+            <option *ngFor="let venueYear of (venueYears$ | async)?.data" [value]="venueYear.VenueYear">{{venueYear.VenueYear}}, {{venueYear.VenueCity}}</option>
+        </select>
+    </div>
+    
+    <div class="btn-group col-12" role="group" aria-label="Olympic games type select">
+        <input id="filterAll" type="radio" class="btn-check" formControlName="filter" [value]="null">
+        <label for="filterAll" class="btn btn-outline-primary">All</label>
+    
+        <input id="filterSummer" type="radio" class="btn-check" formControlName="filter" [value]="'Summer'">
+        <label for="filterSummer" class="btn btn-outline-primary">Summer</label>
+    
+        <input id="filterWinter" type="radio" class="btn-check" formControlName="filter" [value]="'Winter'">
+        <label for="filterWinter" class="btn btn-outline-primary">Winter</label>
+    </div>
+
+    <div class="col-12">
+        <button appBackButton class="btn btn-danger">Back <i class="bi bi-back"></i></button>
+    </div>
+</div>
+
+<p class="lead" [hidden]="hasNoData">Total Athletes: {{totalAthletes}}</p>
+
+<div class="alert alert-info" [hidden]="!hasNoData">
+    The current filter/query for {{athleteYearOptionsForm.get('year')?.value}} ({{athleteYearOptionsForm.get('filter')?.value}}) has no data, this year did not have a {{athleteYearOptionsForm.get('filter')?.value}} games.
+</div>
+
+<div id="chartdiv" [hidden]="hasNoData">
+</div>
+
+<div [hidden]="hasNoData">
+    <h3 class="mt-2">Full country list</h3>
+    <div class="table-responsive">
+        <table class="table table-hover table-borderless">
+            <thead>
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col">Country Code</th>
+                    <th scope="col">Country Name</th>
+                    <th scope="col">Total Athletes</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let athleteYear of athletesYearResponse" [routerLink]="['/country/athletes', athleteYear.CountryID]" [queryParams]="{ weighted: true }">
+                    <td><span class="fi" [class]="'fi-' + (athleteYear.CountryISOalpha2 ? athleteYear.CountryISOalpha2.toLowerCase() : 'xx')"></span></td>
+                    <td>{{athleteYear.CountryCode}}</td>
+                    <td>{{athleteYear.CountryName}}</td>
+                    <td>{{athleteYear.TotalAthletes}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -33,7 +33,6 @@ export class CountryAthletesComponent implements OnInit {
 
   root!: Root;
   chart!: XYChart;
-  data: any[] = [];
   xAxis!: CategoryAxis<AxisRenderer>;
   yAxis!: ValueAxis<AxisRenderer>;
 

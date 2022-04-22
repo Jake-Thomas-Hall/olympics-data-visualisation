@@ -1,3 +1,4 @@
 {
-    "apiEndpoint": "http://localhost/odm-assignment/api/"
+    "apiEndpoint": "http://localhost/odm-assignment/api/",
+    "endpoint": "http://localhost:4200/"
 }
