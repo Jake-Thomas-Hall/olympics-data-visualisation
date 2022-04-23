@@ -1,0 +1,77 @@
+<h1>Most popular sports</h1>
+<h2 class="text-muted">Most popular sports by year, or all years, summer or winter games</h2>
+
+<div class="my-2 row row-cols-md-auto g-3 align-items-center" [formGroup]="mostPopularSportsOptionsForm">
+    <div class="col-12">
+        <select id="year" class="form-select" aria-label="Select year" formControlName="year">
+            <option value="All">All years</option>
+            <option *ngFor="let venueYear of (venueYears$ | async)?.data" [value]="venueYear.VenueYear">
+                {{venueYear.VenueYear}}, {{venueYear.VenueCity}}</option>
+        </select>
+    </div>
+
+    <div class="btn-group col-12" role="group" aria-label="Olympic games type select">
+        <input id="filterSummer" type="radio" class="btn-check" formControlName="games" [value]="'Summer'">
+        <label for="filterSummer" class="btn btn-outline-primary">Summer</label>
+
+        <input id="filterWinter" type="radio" class="btn-check" formControlName="games" [value]="'Winter'">
+        <label for="filterWinter" class="btn btn-outline-primary">Winter</label>
+    </div>
+
+    <div class="col-12">
+        <button appBackButton class="btn btn-danger">Back <i class="bi bi-back"></i></button>
+    </div>
+</div>
+
+<div class="alert alert-info" [hidden]="!hasNoData">
+    No data to display. {{mostPopularSportsOptionsForm.get('games')?.value}} games did not take place in {{mostPopularSportsOptionsForm.get('year')?.value}}.
+</div>
+
+<div class="row" [hidden]="hasNoData">
+    <div class="col-sm-4">
+        <div class="card mt-2">
+            <div class="card-body">
+                <h5 class="card-title text-muted">Most Popular</h5>
+                <p class="card-text fs-1">{{sportPopularities[0]?.SportType}}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="card mt-2">
+            <div class="card-body">
+                <h5 class="card-title text-muted">Second</h5>
+                <p class="card-text fs-1">{{sportPopularities[1]?.SportType}}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="card mt-2">
+            <div class="card-body">
+                <h5 class="card-title text-muted">Third</h5>
+                <p class="card-text fs-1">{{sportPopularities[2]?.SportType}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="chartdiv" [hidden]="hasNoData">
+</div>
+
+<div [hidden]="hasNoData">
+    <div class="table-responsive">
+        <table class="table table-borderless">
+            <thead>
+                <tr>
+                    <th scope="col">Sport</th>
+                    <th scope="col">Medals awarded</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let sportPopularity of sportPopularities">
+                    <td>{{sportPopularity.SportType}}</td>
+                    <td>{{sportPopularity.Medals}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -4,12 +4,14 @@ import { SportGenderParticipationComponent } from './sport-gender-participation/
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SportRoutingModule } from './sport.routing.module';
+import { MostPopularSportsComponent } from './most-popular-sports/most-popular-sports.component';
 
 
 
 @NgModule({
   declarations: [
-    SportGenderParticipationComponent
+    SportGenderParticipationComponent,
+    MostPopularSportsComponent
   ],
   imports: [
     CommonModule,

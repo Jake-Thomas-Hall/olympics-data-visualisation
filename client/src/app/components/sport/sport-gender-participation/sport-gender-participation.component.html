@@ -21,3 +21,26 @@
 <div class="alert alert-info mt-2">
     Click the legend to hide or show each data series.
 </div>
+
+<div>
+    <div class="table-responsive">
+        <table class="table table-borderless">
+            <thead>
+                <tr>
+                    <th scope="col">Year</th>
+                    <th scope="col">Total sports</th>
+                    <th scope="col">Women's sports</th>
+                    <th scope="col">Men's sports</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let sportGender of sportGenderParticipations">
+                    <td>{{sportGender.VenueYear}}</td>
+                    <td>{{sportGender.TotalSports}}</td>
+                    <td>{{sportGender.Women}}</td>
+                    <td>{{sportGender.Men}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

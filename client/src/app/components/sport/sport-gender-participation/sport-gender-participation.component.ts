@@ -3,19 +3,19 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { StyleService } from 'src/app/services/style.service';
 import am5themes_Dark from '@amcharts/amcharts5/themes/Dark';
 import am5themes_Animated from '@amcharts/amcharts5/themes/Animated';
-import { Color, color, DataProcessor, Legend, p50, Root, Series, Tooltip } from '@amcharts/amcharts5';
+import { Color, color, Legend, p50, Root, Tooltip } from '@amcharts/amcharts5';
 import { XYChart } from '@amcharts/amcharts5/.internal/charts/xy/XYChart';
 import { SportService } from 'src/app/services/sport.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest } from 'rxjs';
 import { XYCursor } from '@amcharts/amcharts5/.internal/charts/xy/XYCursor';
-import { DateAxis } from '@amcharts/amcharts5/.internal/charts/xy/axes/DateAxis';
 import { AxisRendererX } from '@amcharts/amcharts5/.internal/charts/xy/axes/AxisRendererX';
 import { ValueAxis } from '@amcharts/amcharts5/.internal/charts/xy/axes/ValueAxis';
 import { AxisRendererY } from '@amcharts/amcharts5/.internal/charts/xy/axes/AxisRendererY';
 import { LineSeries } from '@amcharts/amcharts5/.internal/charts/xy/series/LineSeries';
 import { CategoryAxis } from '@amcharts/amcharts5/.internal/charts/xy/axes/CategoryAxis';
 import { AxisRenderer } from '@amcharts/amcharts5/.internal/charts/xy/axes/AxisRenderer';
+import { SportGenderParticipation } from 'src/app/models/responses/sport-gender-participation.response.model';
 
 @Component({
   selector: 'app-sport-gender-participation',
@@ -24,6 +24,7 @@ import { AxisRenderer } from '@amcharts/amcharts5/.internal/charts/xy/axes/AxisR
 })
 export class SportGenderParticipationComponent implements OnInit {
   sportGenderOptionsForm: FormGroup;
+  sportGenderParticipations: SportGenderParticipation[] = [];
 
   root!: Root;
   chart!: XYChart;
@@ -54,6 +55,7 @@ export class SportGenderParticipationComponent implements OnInit {
       layout: this.root.verticalLayout
     }));
 
+    // Add a cursor 
     let cursor = this.chart.set("cursor", XYCursor.new(this.root, {
       behavior: "none"
     }));
@@ -71,10 +73,12 @@ export class SportGenderParticipationComponent implements OnInit {
       renderer: AxisRendererY.new(this.root, {})
     }));
 
+    // Create the three required series
     this.createSeries("Total Athletes", "TotalSports", "{categoryX} total sports: {valueY}", color("#b3b3b3"));
     this.createSeries("Female Athletes", "Women", "{categoryX} womens sports: {valueY}", color("#eb54ff"));
     this.createSeries("Male Athletes", "Men", "{categoryX} mens sports: {valueY}", color("#0f68f7"));
     
+    // Add legend
     let legend = this.chart.children.push(Legend.new(this.root, {
       centerX: p50,
       x: p50
@@ -92,8 +96,12 @@ export class SportGenderParticipationComponent implements OnInit {
       this.sportGenderOptionsForm.patchValue(value, { emitEvent: false });
 
       this.sportService.getSportGenderParticipation(value).subscribe(result => {
+        this.sportGenderParticipations = result.data;
+
+        // Data needs to be mapped, need the years in string format
         let data = result.data.map((obj) => ({ VenueYear: obj.VenueYear.toString(), TotalSports: obj.TotalSports, Women: obj.Women, Men: obj.Men }))
         this.xAxis.data.setAll(data);
+        // Set data into each series, animate the series to appear as well, each one has a slightly longer duration, to create a nice effect.
         let duration = 1000;
         this.chart.series.each((series, index) => {
           series.data.setAll(data);
@@ -119,6 +127,7 @@ export class SportGenderParticipationComponent implements OnInit {
     });
   }
 
+  // Allows less clutter when creating the series'
   private createSeries(seriesName: string, valueYField: string, labelText: string, color: Color) {
     let series = this.chart.series.push(LineSeries.new(this.root, {
       name: seriesName,
@@ -134,11 +143,13 @@ export class SportGenderParticipationComponent implements OnInit {
       fill: color
     }));
 
+    // Set there to be a fill for the line
     series.fills.template.setAll({
       fillOpacity: 0.1,
       visible: true
     });
 
+    // Make the stroke wider
     series.strokes.template.setAll({
       strokeWidth: 2
     });
