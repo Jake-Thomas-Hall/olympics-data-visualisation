@@ -9,6 +9,7 @@ import { AppConfigService } from './services/app-config.service';
 import { StyleService } from './services/style.service';
 import { CountryModule } from './components/country/country.module';
 import { AthleteModule } from './components/athlete/athlete.module';
+import { SportModule } from './components/sport/sport.module';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { AthleteModule } from './components/athlete/athlete.module';
     HttpClientModule,
     SharedModule,
     CountryModule,
-    AthleteModule
+    AthleteModule,
+    SportModule
   ],
   providers: [
     AppConfigService, 

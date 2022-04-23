@@ -85,6 +85,8 @@ export class CountryAthletesComponent implements OnInit {
       this.router.navigate([], { queryParams: value, queryParamsHandling: 'merge' });
     });
 
+    this.chart.appear(2000, 300);
+
     combineLatest([this.route.params, this.route.queryParams], (params, queryParams) => ({ ...params, ...queryParams })).subscribe(value => {
       // Set values from query params into form, do not emit update - don't want to cause a race condition of endless page reloads :)
       this.countryAthletesOptionsForm.patchValue({weighted: null, gender: null, ...value}, { emitEvent: false });
@@ -114,6 +116,7 @@ export class CountryAthletesComponent implements OnInit {
           this.xAxis.data.setAll(result.top10.data.athletes);
           this.chart.series.each(series => {
             series.data.setAll(result.top10.data.athletes);
+            series.appear(500, 0);
           });
 
           // Calculate end page, use ceiling to ensure round number

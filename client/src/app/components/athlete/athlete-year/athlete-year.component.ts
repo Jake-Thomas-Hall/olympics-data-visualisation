@@ -19,6 +19,7 @@ import { StyleService } from 'src/app/services/style.service';
 import { VenueService } from 'src/app/services/venue.service';
 import am5themes_Dark from '@amcharts/amcharts5/themes/Dark';
 import am5themes_Animated from '@amcharts/amcharts5/themes/Animated';
+
 @Component({
   selector: 'app-athlete-year',
   templateUrl: './athlete-year.component.html',
@@ -60,6 +61,7 @@ export class AthleteYearComponent implements OnInit {
       panY: false,
       wheelX: "panX",
       wheelY: "zoomX",
+      pinchZoomX: true,
       layout: this.root.verticalLayout
     }));
 
@@ -70,8 +72,6 @@ export class AthleteYearComponent implements OnInit {
       centerX: p100,
       paddingTop: 20
     });
-
-    
 
     this.xAxis = this.chart.xAxes.push(CategoryAxis.new(this.root, {
       categoryField: 'CountryName',

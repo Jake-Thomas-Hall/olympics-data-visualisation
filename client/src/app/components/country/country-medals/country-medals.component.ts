@@ -71,6 +71,8 @@ export class CountryMedalsComponent implements OnInit {
 
     let legend = this.chart.children.push(Legend.new(this.root, {}));
 
+    this.chart.appear(2000, 300);
+
     this.styleService.isDarkTheme.subscribe(value => {
       if (value) {
         this.root.setThemes([
@@ -128,6 +130,7 @@ export class CountryMedalsComponent implements OnInit {
           }
 
           legend.data.setAll(this.series.dataItems);
+          this.series.appear(1000, 0);
         },
         error: (error: HttpErrorResponse) => {
           this.error = `Country with id ${this.routeId} could not be found. HTTP Error response: ${error.status}`;

@@ -1,0 +1,23 @@
+<h1>Gender sport particpation</h1>
+<h2 class="text-muted">Numer of sports each gender participated in, by Year</h2>
+
+<div class="my-2 row row-cols-md-auto g-3 align-items-center" [formGroup]="sportGenderOptionsForm"> 
+    <div class="btn-group col-12" role="group" aria-label="Olympic games type select">
+        <input id="gamesSummer" type="radio" class="btn-check" formControlName="games" [value]="'Summer'">
+        <label for="gamesSummer" class="btn btn-outline-primary">Summer</label>
+    
+        <input id="gamesWinter" type="radio" class="btn-check" formControlName="games" [value]="'Winter'">
+        <label for="gamesWinter" class="btn btn-outline-primary">Winter</label>
+    </div>
+
+    <div class="col-12">
+        <button appBackButton class="btn btn-danger">Back <i class="bi bi-back"></i></button>
+    </div>
+</div>
+
+<div id="chartdiv">
+</div>
+
+<div class="alert alert-info mt-2">
+    Click the legend to hide or show each data series.
+</div>
