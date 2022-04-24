@@ -28,6 +28,7 @@
             <li><a [routerLink]="['/', 'athlete', 'year']" class="link-dark rounded">Number of Athletes by Year</a></li>
             <li><a [routerLink]="['/', 'sport', 'gender', 'participation']" class="link-dark rounded">Gender sports by Year</a></li>
             <li><a [routerLink]="['/', 'sport', 'popularity']" class="link-dark rounded">Most popular sports</a></li>
+            <li><a [routerLink]="['/', 'athlete', 'list']" [queryParams]="{ medal: 1, order: 'Weighting' }" class="link-dark rounded">Gold athletes</a></li>
             <li><a [routerLink]="['/', 'country', 'medals', 'map']" class="link-dark rounded">Country Medals Map</a></li>
           </ul>
         </div>
@@ -53,6 +54,7 @@
         <div class="collapse" id="athlete-collapse">
           <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
             <li><a [routerLink]="['/', 'athlete', 'year']" class="link-dark rounded">By Year</a></li>
+            <li><a [routerLink]="['/', 'athlete', 'list']" class="link-dark rounded">List</a></li>
           </ul>
         </div>
       </li>

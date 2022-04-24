@@ -24,7 +24,7 @@ export class CountryMedalsComponent implements OnInit {
   error: string | null = null;
   countryMedalsResponse: CountryMedalSummary | null = null;
   hasNoMedals = false;
-  type = new FormControl(null);
+  games = new FormControl(null);
   routeId: number = 0;
 
   constructor(
@@ -89,10 +89,10 @@ export class CountryMedalsComponent implements OnInit {
 
     combineLatest({paramMap: this.route.paramMap, queryParamMap: this.route.queryParamMap}).subscribe(value => {
       this.routeId = +value.paramMap.get('id')!;
-      const type = value.queryParamMap.get('type');
-      this.type.setValue(type, {emitEvent: false});
+      const games = value.queryParamMap.get('games');
+      this.games.setValue(games, {emitEvent: false});
 
-      this.countryService.getMedals({ id: this.routeId, type: type }).subscribe({
+      this.countryService.getMedals({ id: this.routeId, type: games }).subscribe({
         next: value => {
           this.countryMedalsResponse = value.data;
           this.series.data.setAll([]);
@@ -138,9 +138,9 @@ export class CountryMedalsComponent implements OnInit {
       });
     });
 
-    this.type.valueChanges.subscribe(value => {
+    this.games.valueChanges.subscribe(value => {
       if (value != null) {
-        this.router.navigate(['../../medals', this.routeId], {queryParams: {type: value}, relativeTo: this.route});
+        this.router.navigate(['../../medals', this.routeId], {queryParams: {games: value}, relativeTo: this.route});
       }
       else {
         this.router.navigate(['../../medals', this.routeId], {relativeTo: this.route, });

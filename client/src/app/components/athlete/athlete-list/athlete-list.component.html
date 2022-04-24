@@ -1,0 +1,78 @@
+<h1>Athlete list</h1>
+<h2 class="text-muted">List of all athletes, filterable by medal type, sport and order.</h2>
+
+<div class="my-2 row row-cols-md-auto g-3 align-items-center" [formGroup]="athleteListOptionsForm">
+    <div class="col-12">
+        <select id="sport" class="form-select" aria-label="Select year" formControlName="sport">
+            <option [value]="null">All Sports</option>
+            <option *ngFor="let sport of (sports$ | async)?.data" [value]="sport.SportID">{{sport.SportType}}</option>
+        </select>
+    </div>
+    
+    <div class="btn-group col-12" role="group" aria-label="Medal type select">
+        <input id="medalAll" type="radio" class="btn-check" formControlName="medal" [value]="null">
+        <label for="medalAll" class="btn btn-outline-primary">All</label>
+    
+        <input id="medalGold" type="radio" class="btn-check" formControlName="medal" [value]="'1'">
+        <label for="medalGold" class="btn btn-outline-primary">Gold</label>
+    
+        <input id="medalSilver" type="radio" class="btn-check" formControlName="medal" [value]="'2'">
+        <label for="medalSilver" class="btn btn-outline-primary">Silver</label>
+
+        <input id="medalBronze" type="radio" class="btn-check" formControlName="medal" [value]="'3'">
+        <label for="medalBronze" class="btn btn-outline-primary">Bronze</label>
+    </div>
+
+    <div class="btn-group col-12" role="group" aria-label="Order select">
+        <input id="orderNone" type="radio" class="btn-check" formControlName="order" [value]="null">
+        <label for="orderNone" class="btn btn-outline-primary">No order</label>
+    
+        <input id="orderMedals" type="radio" class="btn-check" formControlName="order" [value]="'Medals'">
+        <label for="orderMedals" class="btn btn-outline-primary">By Medal count desc</label>
+    
+        <input id="orderWeighted" type="radio" class="btn-check" formControlName="order" [value]="'Weighting'">
+        <label for="orderWeighted" class="btn btn-outline-primary">By Weighting desc</label>
+    </div>
+
+    <div class="col-12">
+        <button appBackButton class="btn btn-danger">Back <i class="bi bi-back"></i></button>
+    </div>
+</div>
+
+<div>
+    <div class="table-responsive">
+        <table class="table table-hover table-borderless">
+            <thead>
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col">Full name</th>
+                    <th scope="col">Gender</th>
+                    <th scope="col">Country</th>
+                    <th scope="col">Total medals 🎖</th>
+                    <th scope="col">Golds 🥇</th>
+                    <th scope="col">Silvers 🥈</th>
+                    <th scope="col">Bronze 🥉</th>
+                    <th scope="col">Weighting</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let athlete of athletes" [routerLink]="['/athlete/detail', athlete.AthleteID]">
+                    <td><span class="fi" [class]="'fi-' + (athlete.CountryISOalpha2 ? athlete.CountryISOalpha2.toLowerCase() : 'xx')"></span></td>
+                    <td>{{athlete.AthleteFullName}}</td>
+                    <td>{{athlete.AthleteGender}}</td>
+                    <td>{{athlete.CountryName}}</td>
+                    <td>{{athlete.Medals}}</td>
+                    <td>{{athlete.Golds}}</td>
+                    <td>{{athlete.Silvers}}</td>
+                    <td>{{athlete.Bronze}}</td>
+                    <td>{{athlete.Weighting}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <ul class="pagination">
+        <li class="page-item" [class.disabled]="page === 1"><a class="page-link" [routerLink]="[]" [queryParams]="{ page: null }" [queryParamsHandling]="'merge'">First</a></li>
+        <li class="page-item" [class.disabled]="page === 1"><a class="page-link" [routerLink]="[]" [queryParams]="{ page: page - 1 <= 1 ? null : page - 1 }" [queryParamsHandling]="'merge'">Previous</a></li>
+        <li class="page-item" [class.disabled]="!allowNext"><a class="page-link" [routerLink]="[]" [queryParams]="{ page: page + 1 }" [queryParamsHandling]="'merge'">Next</a></li>
+    </ul>
+</div>

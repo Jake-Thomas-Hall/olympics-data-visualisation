@@ -4,13 +4,13 @@
 <p class="lead">Total medals: {{countryMedalsResponse?.Medals}}</p>
 <div class="mb-3">
     <div class="btn-group me-2 mt-2" role="group" aria-label="Olympic games type select">
-        <input id="gamesTypeAll" type="radio" class="btn-check" [formControl]="type" [value]="null">
+        <input id="gamesTypeAll" type="radio" class="btn-check" [formControl]="games" [value]="null">
         <label for="gamesTypeAll" class="btn btn-outline-primary">All</label>
     
-        <input id="gamesTypeSummer" type="radio" class="btn-check" [formControl]="type" [value]="'Summer'">
+        <input id="gamesTypeSummer" type="radio" class="btn-check" [formControl]="games" [value]="'Summer'">
         <label for="gamesTypeSummer" class="btn btn-outline-primary">Summer</label>
     
-        <input id="gamesTypeWinter" type="radio" class="btn-check" [formControl]="type" [value]="'Winter'">
+        <input id="gamesTypeWinter" type="radio" class="btn-check" [formControl]="games" [value]="'Winter'">
         <label for="gamesTypeWinter" class="btn btn-outline-primary">Winter</label>
     </div>
 
@@ -23,7 +23,7 @@
     {{ error }}
 </div>
 <div class="alert alert-info" [hidden]="!hasNoMedals">
-    {{countryMedalsResponse?.CountryName}} has no medals recorded for {{type.value === null ? 'all the' : 'the ' + type.value}} games.
+    {{countryMedalsResponse?.CountryName}} has no medals recorded for {{games.value === null ? 'all the' : 'the ' + games.value}} games.
 </div>
 
 <div id="chartdiv" [hidden]="hasNoMedals">

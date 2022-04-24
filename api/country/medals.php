@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
         WHERE C.CountryID = ?
     SQL);
     
-    if (!empty($_GET['type'])) {
+    if (!empty($_GET['games'])) {
         $stmt = $connection->prepare(<<<SQL
         SELECT C.CountryID, C.CountryName, C.CountryCode, C.CountryPopulation, C.CountryGDP, C.CountryISOalpha2, 
         COUNT(W.MedalID) as Medals, 
@@ -32,8 +32,8 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
         jsonErrorResponse(404, "Id not provided.");
     }
     
-    if (!empty($_GET["type"])) {
-        $stmt->bind_param("is", $_GET["id"], $_GET["type"]);
+    if (!empty($_GET["games"])) {
+        $stmt->bind_param("is", $_GET["id"], $_GET["games"]);
     }
     else {
         $stmt->bind_param("i", $_GET["id"]);
