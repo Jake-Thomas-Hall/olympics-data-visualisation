@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest, Observable } from 'rxjs';
 import { AllSportsResponse } from 'src/app/models/responses/all-sports.response.model';
@@ -14,6 +14,7 @@ import { SportService } from 'src/app/services/sport.service';
 })
 export class AthleteListComponent implements OnInit {
   athleteListOptionsForm: FormGroup;
+  searchFilter: FormControl;
   sports$: Observable<AllSportsResponse>;
   athletes: AthleteListItem[] = [];
   allowNext = false;
@@ -32,6 +33,8 @@ export class AthleteListComponent implements OnInit {
       order: [null]
     });
 
+    this.searchFilter = this.fb.control(null);
+
     this.sports$ = this.sportService.getAll();
   } 
 
@@ -40,9 +43,19 @@ export class AthleteListComponent implements OnInit {
       this.router.navigate([], { queryParams: value, queryParamsHandling: 'merge' });
     });
 
+    this.searchFilter.valueChanges.subscribe(value => {
+      this.router.navigate([], { queryParams: { filter: value }, queryParamsHandling: 'merge'})
+    });
+
     combineLatest([this.route.params, this.route.queryParams], (params, queryParams) => ({ ...params, ...queryParams })).subscribe(value => {
       // Set values from query params into form, do not emit update - don't want to cause a race condition of endless page reloads :)
       this.athleteListOptionsForm.patchValue({ medal: null, sport: null, order: null, ...value }, { emitEvent: false });
+
+      if (value['filter'] === '') {
+        delete value['filter'];
+        this.router.navigate([], { queryParams: value });
+        return;
+      }
 
       if (value['page']) {
         this.page = +value['page'];
@@ -50,11 +63,11 @@ export class AthleteListComponent implements OnInit {
       else {
         this.page = 1;
       }
-      console.log('Page value', this.page);
 
       this.athleteService.getAthleteList({ page: 1, ...value}).subscribe(result => {
         if (result.data.length < 1) {
           this.router.navigate([], { queryParams: { page: null}, queryParamsHandling: 'merge' });
+          return;
         }
         this.allowNext = result.data.length > 25;
         this.athletes = result.data.slice(0, 25);

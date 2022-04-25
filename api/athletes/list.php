@@ -6,6 +6,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
     $sportFilter = "";
     $medalFilter = "";
     $orderFilter = "";
+    $searchFilter = "";
 
     // Setup sport filter if sport is provided
     if (isset($_GET["sport"])) {
@@ -46,6 +47,17 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
         }
     }
 
+    // Apply the text search to further filter results, if a search string is provided
+    if (isset($_GET['filter'])) {
+        if (!empty($medalFilter)) {
+            $searchFilter = "AND AthleteFullName LIKE ? OR CountryName LIKE ?";
+        }
+        else {
+            $searchFilter = "WHERE AthleteFullName LIKE ? OR CountryName LIKE ?";
+        }
+        $filter = $_GET['filter'];
+    }
+
     // Peform subquery which returns sports grouped by year, win type and gender - main query then uses this result to count the number of sports each gender participated in
     $sql = "SELECT AthleteID, AthleteFullName, AthleteGender, CountryName, CountryISOalpha2, Medals, Golds, Silvers, Bronze, (Golds * 3) + (Silvers * 2) + Bronze as Weighting FROM (
                 SELECT A.AthleteID, CONCAT(A.AthleteFirstName, ' ', A.AthleteLastName) as AthleteFullName, A.AthleteGender, C.CountryName, C.CountryISOalpha2, COUNT(W.WinID) as Medals, SUM(W.MedalID = 1) as Golds, SUM(W.MedalID = 2) as 	Silvers, SUM(W.MedalID = 3) as Bronze
@@ -55,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
                 $sportFilter 
                 GROUP BY A.AthleteID
             ) as x
-            $medalFilter 
+            $medalFilter $searchFilter
             $orderFilter";
 
     if (!isset($_GET['page'])) {
@@ -68,8 +80,14 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
     $sql = $sql . " LIMIT $limitStart, 26";
 
     $athleteListQuery = $connection->prepare($sql);
-    if (isset($sport)) {
+    if (isset($sport) && !isset($_GET['filter'])) {
         $athleteListQuery->bind_param("i", $sport);
+    }
+    else if (!isset($sport) && isset($_GET['filter'])) {
+        $athleteListQuery->bind_param("ss", "%{$_GET['filter']}%", "%{$_GET['filter']}%");
+    }
+    else if (isset($sport) && isset($_GET['filter'])) {
+        $athleteListQuery->bind_param("iss", $sport, "%{$_GET['filter']}%", "%{$_GET['filter']}%");
     }
     $athleteListQuery->execute();
     $result = $athleteListQuery->get_result();

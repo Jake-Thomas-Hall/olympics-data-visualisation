@@ -8,14 +8,14 @@
             <option *ngFor="let sport of (sports$ | async)?.data" [value]="sport.SportID">{{sport.SportType}}</option>
         </select>
     </div>
-    
+
     <div class="btn-group col-12" role="group" aria-label="Medal type select">
         <input id="medalAll" type="radio" class="btn-check" formControlName="medal" [value]="null">
         <label for="medalAll" class="btn btn-outline-primary">All</label>
-    
+
         <input id="medalGold" type="radio" class="btn-check" formControlName="medal" [value]="'1'">
         <label for="medalGold" class="btn btn-outline-primary">Gold</label>
-    
+
         <input id="medalSilver" type="radio" class="btn-check" formControlName="medal" [value]="'2'">
         <label for="medalSilver" class="btn btn-outline-primary">Silver</label>
 
@@ -26,16 +26,25 @@
     <div class="btn-group col-12" role="group" aria-label="Order select">
         <input id="orderNone" type="radio" class="btn-check" formControlName="order" [value]="null">
         <label for="orderNone" class="btn btn-outline-primary">No order</label>
-    
+
         <input id="orderMedals" type="radio" class="btn-check" formControlName="order" [value]="'Medals'">
         <label for="orderMedals" class="btn btn-outline-primary">By Medal count desc</label>
-    
+
         <input id="orderWeighted" type="radio" class="btn-check" formControlName="order" [value]="'Weighting'">
         <label for="orderWeighted" class="btn btn-outline-primary">By Weighting desc</label>
     </div>
 
     <div class="col-12">
         <button appBackButton class="btn btn-danger">Back <i class="bi bi-back"></i></button>
+    </div>
+</div>
+
+<div class="mb-2 row">
+    <div class="col-12 col-sm-10 col-md-6 col-lg-4">
+        <div class="form-floating">
+            <input autocomplete="off" id="searchFilter" [formControl]="searchFilter" class="form-control" type="text" placeholder="Name here" aria-label="Athlete filter">
+            <label for="searchFilter">Filter by name or country</label>
+        </div>
     </div>
 </div>
 
@@ -57,7 +66,9 @@
             </thead>
             <tbody>
                 <tr *ngFor="let athlete of athletes" [routerLink]="['/athlete/detail', athlete.AthleteID]">
-                    <td><span class="fi" [class]="'fi-' + (athlete.CountryISOalpha2 ? athlete.CountryISOalpha2.toLowerCase() : 'xx')"></span></td>
+                    <td><span class="fi"
+                            [class]="'fi-' + (athlete.CountryISOalpha2 ? athlete.CountryISOalpha2.toLowerCase() : 'xx')"></span>
+                    </td>
                     <td>{{athlete.AthleteFullName}}</td>
                     <td>{{athlete.AthleteGender}}</td>
                     <td>{{athlete.CountryName}}</td>
@@ -71,8 +82,12 @@
         </table>
     </div>
     <ul class="pagination">
-        <li class="page-item" [class.disabled]="page === 1"><a class="page-link" [routerLink]="[]" [queryParams]="{ page: null }" [queryParamsHandling]="'merge'">First</a></li>
-        <li class="page-item" [class.disabled]="page === 1"><a class="page-link" [routerLink]="[]" [queryParams]="{ page: page - 1 <= 1 ? null : page - 1 }" [queryParamsHandling]="'merge'">Previous</a></li>
-        <li class="page-item" [class.disabled]="!allowNext"><a class="page-link" [routerLink]="[]" [queryParams]="{ page: page + 1 }" [queryParamsHandling]="'merge'">Next</a></li>
+        <li class="page-item" [class.disabled]="page === 1"><a class="page-link" [routerLink]="[]"
+                [queryParams]="{ page: null }" [queryParamsHandling]="'merge'">First</a></li>
+        <li class="page-item" [class.disabled]="page === 1"><a class="page-link" [routerLink]="[]"
+                [queryParams]="{ page: page - 1 <= 1 ? null : page - 1 }" [queryParamsHandling]="'merge'">Previous</a>
+        </li>
+        <li class="page-item" [class.disabled]="!allowNext"><a class="page-link" [routerLink]="[]"
+                [queryParams]="{ page: page + 1 }" [queryParamsHandling]="'merge'">Next</a></li>
     </ul>
 </div>
