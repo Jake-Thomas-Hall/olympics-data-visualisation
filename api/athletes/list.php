@@ -18,13 +18,13 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
     if (isset($_GET["medal"])) {
         switch ($_GET["medal"]) {
             case 1:
-                $medalFilter = "WHERE Golds > 0";
+                $medalFilter = "WHERE Golds >= 1";
                 break;
             case 2:
-                $medalFilter = "WHERE Silvers > 0";
+                $medalFilter = "WHERE Silvers >= 1";
                 break;
             case 3:
-                $medalFilter = "WHERE Bronze > 0";
+                $medalFilter = "WHERE Bronze >= 1";
                 break;
             default:
                 jsonErrorResponse(400, "Invalid option provided for medal, 1, 2 or 3 expected.");
@@ -39,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
                 $orderFilter = "ORDER BY Weighting DESC";
                 break;
             case 'Medals':
-                $medalFilter = "ORDER BY Medals DESC";
+                $orderFilter = "ORDER BY Medals DESC";
                 break;
             default:
                 jsonErrorResponse(400, "Invalid option provided for order; 'Weighting' or 'Medals' expected.");
@@ -48,14 +48,14 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
     }
 
     // Apply the text search to further filter results, if a search string is provided
-    if (isset($_GET['filter'])) {
+    if (isset($_GET['filter']) && !empty($_GET['filter'])) {
         if (!empty($medalFilter)) {
-            $searchFilter = "AND AthleteFullName LIKE ? OR CountryName LIKE ?";
+            $searchFilter = "AND (AthleteFullName LIKE ? OR CountryName LIKE ?)";
         }
         else {
             $searchFilter = "WHERE AthleteFullName LIKE ? OR CountryName LIKE ?";
         }
-        $filter = $_GET['filter'];
+        $filter = "%{$_GET['filter']}%";
     }
 
     // Peform subquery which returns sports grouped by year, win type and gender - main query then uses this result to count the number of sports each gender participated in
@@ -67,8 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
                 $sportFilter 
                 GROUP BY A.AthleteID
             ) as x
-            $medalFilter $searchFilter
-            $orderFilter";
+            $medalFilter $searchFilter $orderFilter";
 
     if (!isset($_GET['page'])) {
         jsonErrorResponse(400, "Page number must be provided (starting from 1) for all athlete list queries.");
@@ -84,10 +83,10 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
         $athleteListQuery->bind_param("i", $sport);
     }
     else if (!isset($sport) && isset($_GET['filter'])) {
-        $athleteListQuery->bind_param("ss", "%{$_GET['filter']}%", "%{$_GET['filter']}%");
+        $athleteListQuery->bind_param("ss", $filter, $filter);
     }
     else if (isset($sport) && isset($_GET['filter'])) {
-        $athleteListQuery->bind_param("iss", $sport, "%{$_GET['filter']}%", "%{$_GET['filter']}%");
+        $athleteListQuery->bind_param("iss", $sport, $filter, $filter);
     }
     $athleteListQuery->execute();
     $result = $athleteListQuery->get_result();

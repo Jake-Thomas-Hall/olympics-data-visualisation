@@ -1,0 +1,61 @@
+<h1>{{athleteDetail?.AthleteFullName}} medal details</h1>
+<h2 class="text-muted">List of {{athleteDetail?.AthleteFullName}}'s medals, most recent first</h2>
+
+<div class="row mb-2 row-cols-md-auto g-3 align-items-center">
+    <div class="col-12">
+        <a [routerLink]="['/', 'country', 'athletes', athleteDetail?.CountryID]" class="btn btn-secondary me-2 mt-2">Country Athletes summary <i class="bi bi-box-arrow-in-right"></i></a>
+        <button appBackButton class="btn btn-danger mt-2">Back <i class="bi bi-back"></i></button>
+    </div>
+</div>
+
+<div class="row g-3">
+    <div class="col-sm-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title text-muted">Gender</h5>
+                <p class="card-text fs-1">{{athleteDetail?.AthleteGender}}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title text-muted">Country</h5>
+                <p class="card-text fs-1"><span class="fi"
+                        [class]="'fi-' + (athleteDetail?.CountryISOalpha2 ? athleteDetail?.CountryISOalpha2?.toLowerCase() : 'xx')"></span>
+                    {{athleteDetail?.CountryName}}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title text-muted">Total medals</h5>
+                <p class="card-text fs-1">{{athleteDetails.length}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mt-2">
+    <div class="table-responsive">
+        <table class="table table-borderless">
+            <thead>
+                <tr>
+                    <th scope="col">Venue</th>
+                    <th scope="col">Medal</th>
+                    <th scope="col">Games</th>
+                    <th scope="col">Sport</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let athlete of athleteDetails" [routerLink]="['/athlete/detail', athlete.AthleteID]">
+                    <td>{{athlete.VenueYear}}, {{athlete.VenueCity}}</td>
+                    <td>{{getMedalEmoji(athlete.MedalType)}} {{athlete.MedalType}}</td>
+                    <td>{{athlete.WinType}}</td>
+                    <td>{{athlete.SportType}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

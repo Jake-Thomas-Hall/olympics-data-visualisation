@@ -54,7 +54,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let athlete of countryAthletesResponse?.data?.athletes">
+                <tr *ngFor="let athlete of countryAthletesResponse?.data?.athletes" [routerLink]="['/', 'athlete', 'detail', athlete.AthleteID]">
                     <td>{{athlete.AthleteFullName}}</td>
                     <td>{{athlete.AthleteGender}}</td>
                     <td>{{athlete.AthleteMedals}}</td>

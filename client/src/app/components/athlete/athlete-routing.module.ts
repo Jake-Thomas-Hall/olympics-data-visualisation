@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AthleteDetailsComponent } from './athlete-details/athlete-details.component';
 import { AthleteListComponent } from './athlete-list/athlete-list.component';
 import { AthleteYearComponent } from './athlete-year/athlete-year.component';
 
@@ -8,7 +9,8 @@ const routes: Routes = [{
     children: [
       { path: 'year/:year', component: AthleteYearComponent },
       { path: 'year', redirectTo: 'year/2014' },
-      { path: 'list', component: AthleteListComponent }
+      { path: 'list', component: AthleteListComponent },
+      { path: 'detail/:id', component: AthleteDetailsComponent }
     ]
   }
 ];

@@ -3,6 +3,7 @@
     height: 100%;
     left: -280px;
     transition: left 0.3s;
+    overflow-y: auto;
 
     &.overlay-sidenav {
         left: 0;

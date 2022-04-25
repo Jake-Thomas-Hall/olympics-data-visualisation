@@ -101,22 +101,22 @@ export class MostPopularSportsComponent implements OnInit {
       tooltipText: "{categoryX}: {valueY}"
     });
 
+    // Set summer query param if not present, only does this for initial component load.
+    if (!this.route.snapshot.queryParams['games']) {
+      this.router.navigate([], { queryParams: { games: 'Summer' }, queryParamsHandling: 'merge' });
+    }
+
     this.mostPopularSportsOptionsForm.get('year')?.valueChanges.subscribe(value => {
       this.router.navigate(['..', value], { queryParamsHandling: 'merge', relativeTo: this.route });
     });
 
     this.mostPopularSportsOptionsForm.get('games')?.valueChanges.subscribe(value => {
-      this.router.navigate([], { queryParams: { games: value }, queryParamsHandling: 'merge'});
+      this.router.navigate([], { queryParams: { games: value }, queryParamsHandling: 'merge' });
     });
 
     combineLatest([this.route.params, this.route.queryParams], (params, queryParams) => ({ ...params, ...queryParams })).subscribe(value => {
       // Set values from query params into form, do not emit update - don't want to cause a race condition of endless page reloads :)
       this.mostPopularSportsOptionsForm.patchValue(value, { emitEvent: false });
-
-      if (!value['games']) {
-        this.router.navigate([], { queryParams: { games: 'Summer' }, queryParamsHandling: 'merge'});
-        return;
-      }
 
       this.sportService.getSportPopularity(value).subscribe(result => {
         this.sportPopularities = result.data;
@@ -128,7 +128,7 @@ export class MostPopularSportsComponent implements OnInit {
         this.xAxis.data.setAll(mappedData);
         series.data.setAll(mappedData);
         series.appear(1000, 0);
-      });   
+      });
     });
 
     this.styleService.isDarkTheme.subscribe(value => {

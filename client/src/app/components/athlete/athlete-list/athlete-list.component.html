@@ -39,10 +39,10 @@
     </div>
 </div>
 
-<div class="mb-2 row">
+<div class="mb-2 row" [formGroup]="athleteListOptionsForm">
     <div class="col-12 col-sm-10 col-md-6 col-lg-4">
         <div class="form-floating">
-            <input autocomplete="off" id="searchFilter" [formControl]="searchFilter" class="form-control" type="text" placeholder="Name here" aria-label="Athlete filter">
+            <input autocomplete="new-password" id="searchFilter" formControlName="filter" class="form-control" type="text" placeholder="Name here" aria-label="Athlete filter">
             <label for="searchFilter">Filter by name or country</label>
         </div>
     </div>
@@ -69,9 +69,9 @@
                     <td><span class="fi"
                             [class]="'fi-' + (athlete.CountryISOalpha2 ? athlete.CountryISOalpha2.toLowerCase() : 'xx')"></span>
                     </td>
-                    <td>{{athlete.AthleteFullName}}</td>
+                    <td appSearchHighlight [searchedPhrase]="athleteListOptionsForm.get('filter')?.value" [content]="athlete.AthleteFullName" [classToApply]="'highlight'">{{athlete.AthleteFullName}}</td>
                     <td>{{athlete.AthleteGender}}</td>
-                    <td>{{athlete.CountryName}}</td>
+                    <td appSearchHighlight [searchedPhrase]="athleteListOptionsForm.get('filter')?.value" [content]="athlete.CountryName" [classToApply]="'highlight'">{{athlete.CountryName}}</td>
                     <td>{{athlete.Medals}}</td>
                     <td>{{athlete.Golds}}</td>
                     <td>{{athlete.Silvers}}</td>
@@ -81,7 +81,9 @@
             </tbody>
         </table>
     </div>
-    <ul class="pagination">
+    
+    <ul class="pagination align-items-center">
+        <li class="page-item me-3">Page <strong>{{page}}</strong></li>
         <li class="page-item" [class.disabled]="page === 1"><a class="page-link" [routerLink]="[]"
                 [queryParams]="{ page: null }" [queryParamsHandling]="'merge'">First</a></li>
         <li class="page-item" [class.disabled]="page === 1"><a class="page-link" [routerLink]="[]"
