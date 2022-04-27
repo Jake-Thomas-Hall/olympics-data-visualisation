@@ -1,0 +1,113 @@
+<h1>Athletes by Year</h1>
+<h2 class="text-muted">Number of athletes participating by year, separated by Country</h2>
+
+<div class="my-2 row row-cols-md-auto g-3 align-items-center" [formGroup]="leaderboardsOptionsForm">
+    <div class="col-12">
+        <select id="year" class="form-select" aria-label="Select year" formControlName="year">
+            <option value="All">All years</option>
+            <option *ngFor="let venueYear of (venueYears$ | async)?.data" [value]="venueYear.VenueYear">
+                {{venueYear.VenueYear}}, {{venueYear.VenueCity}}</option>
+        </select>
+    </div>
+
+    <div class="col-12">
+        <button appBackButton class="btn btn-danger">Back <i class="bi bi-back"></i></button>
+    </div>
+</div>
+
+<div class="alert alert-info my-2">
+    All leaderboards are weighted, meaning sometimes countries may not be in the order of pure medal count - weighting golds and silvers higher helps to show
+    the performance of each country on a fairer basis.
+</div>
+
+<ul class="nav nav-tabs" id="leaderboardTabs" role="tablist">
+    <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="summer-tab" data-bs-toggle="tab" data-bs-target="#summer" type="button"
+            role="tab" aria-controls="home" aria-selected="true">Summer</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="winter-tab" data-bs-toggle="tab" data-bs-target="#winter" type="button"
+            role="tab" aria-controls="profile" aria-selected="false">Winter</button>
+    </li>
+</ul>
+<div class="tab-content" id="leaderboardTabsContent">
+    <div class="tab-pane fade show active py-3" id="summer" role="tabpanel" aria-labelledby="summer-tab">
+        <div class="alert alert-info my-2" [hidden]="summerLeaderboard.length > 0">
+            Summer games did not take place in {{leaderboardsOptionsForm.get('year')?.value}}.
+        </div>
+        
+        <div id="chartdivSummer" [hidden]="summerLeaderboard.length < 1">
+        </div>
+        
+        <div [hidden]="summerLeaderboard.length < 1">
+            <h3 class="mt-2">Summer leaderboard full</h3>
+            <div class="table-responsive">
+                <table class="table table-hover table-borderless">
+                    <thead>
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col">Country Name</th>
+                            <th scope="col">Golds 🥇</th>
+                            <th scope="col">Silvers 🥈</th>
+                            <th scope="col">Bronze 🥈</th>
+                            <th scope="col">Total 🎖</th>
+                            <th scope="col">Weighted ⚖</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let leaderboardItem of summerLeaderboard" [routerLink]="['/country/athletes', leaderboardItem.CountryID]" [queryParams]="{ weighted: true }">
+                            <td><span class="fi" [class]="'fi-' + (leaderboardItem.CountryISOalpha2 ? leaderboardItem.CountryISOalpha2.toLowerCase() : 'xx')"></span></td>
+                            <td>{{leaderboardItem.CountryName}}</td>
+                            <td><strong>{{leaderboardItem.Golds}}</strong></td>
+                            <td>{{leaderboardItem.Silvers}}</td>
+                            <td>{{leaderboardItem.Bronze}}</td>
+                            <td>{{leaderboardItem.Medals}}</td>
+                            <td><strong>{{leaderboardItem.Weighted}}</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane fade py-3" id="winter" role="tabpanel" aria-labelledby="winter-tab">
+        <div class="alert alert-info my-2" [hidden]="winterLeaderboard.length > 0">
+            Winter games did not take place in {{leaderboardsOptionsForm.get('year')?.value}}.
+        </div>
+        
+        <div id="chartdivWinter" [hidden]="winterLeaderboard.length < 1">
+        </div>
+        
+        <div [hidden]="winterLeaderboard.length < 1">
+            <h3 class="mt-2">Winter leaderboard full</h3>
+            <div class="table-responsive">
+                <table class="table table-hover table-borderless">
+                    <thead>
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col">Country Name</th>
+                            <th scope="col">Golds 🥇</th>
+                            <th scope="col">Silvers 🥈</th>
+                            <th scope="col">Bronze 🥈</th>
+                            <th scope="col">Total 🎖</th>
+                            <th scope="col">Weighted ⚖</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let leaderboardItem of winterLeaderboard" [routerLink]="['/country/athletes', leaderboardItem.CountryID]" [queryParams]="{ weighted: true }">
+                            <td><span class="fi" [class]="'fi-' + (leaderboardItem.CountryISOalpha2 ? leaderboardItem.CountryISOalpha2.toLowerCase() : 'xx')"></span></td>
+                            <td>{{leaderboardItem.CountryName}}</td>
+                            <td><strong>{{leaderboardItem.Golds}}</strong></td>
+                            <td>{{leaderboardItem.Silvers}}</td>
+                            <td>{{leaderboardItem.Bronze}}</td>
+                            <td>{{leaderboardItem.Medals}}</td>
+                            <td><strong>{{leaderboardItem.Weighted}}</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

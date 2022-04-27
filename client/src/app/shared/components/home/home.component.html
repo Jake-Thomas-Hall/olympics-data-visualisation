@@ -19,6 +19,7 @@
 <div>
     <h3>Featured Visualisations</h3>
     <ul>
+        <li><a [routerLink]="['/', 'country', 'leaderboards']">Leaderboards</a></li>
         <li><a [routerLink]="['/', 'country', 'medals', 191]">United Kingdom Medals</a></li>
         <li><a [routerLink]="['/', 'country', 'athletes', 191]">United Kingdom Athletes</a></li>
         <li><a [routerLink]="['/', 'athlete', 'year']">Number of Athletes by Year</a></li>
@@ -27,9 +28,14 @@
         <li><a [routerLink]="['/', 'sport', 'popularity']">Most popular sports</a></li>
         <li><a [routerLink]="['/', 'athlete', 'list']" [queryParams]="{ medal: 1, order: 'Weighting' }">Gold
                 athletes</a></li>
+        <li><a [routerLink]="['/', 'athlete', 'list']" [queryParams]="{ medal: 2, order: 'Weighting' }"
+                >Silver athletes</a></li>
+        <li><a [routerLink]="['/', 'athlete', 'list']" [queryParams]="{ medal: 3, order: 'Weighting' }"
+                >Bronze athletes</a></li>
         <li><a [routerLink]="['/', 'country', 'medals', 'map']">Country Medals Map</a></li>
         <li><a [routerLink]="['/', 'athlete', 'detail', 18907]">Michael Phelps' medals</a></li>
         <li><a [routerLink]="['/', 'athlete', 'detail', 18088]">Chris Hoy's medals</a></li>
+        <li><a [routerLink]="['/', 'country', 'medals', 'capita']">Medals by capita</a></li>
     </ul>
 </div>
 

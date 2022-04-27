@@ -23,15 +23,19 @@
         </button>
         <div class="collapse show" id="featured-collapse">
           <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+            <li><a [routerLink]="['/', 'country', 'leaderboards']" class="link-dark rounded">Leaderboards</a></li>
             <li><a [routerLink]="['/', 'country', 'medals', 191]" class="link-dark rounded">United Kingdom Medals</a></li>
             <li><a [routerLink]="['/', 'country', 'athletes', 191]" class="link-dark rounded">United Kingdom Athletes</a></li>
             <li><a [routerLink]="['/', 'athlete', 'year']" class="link-dark rounded">Number of Athletes by Year</a></li>
             <li><a [routerLink]="['/', 'sport', 'gender', 'participation']" class="link-dark rounded">Gender sports by Year</a></li>
             <li><a [routerLink]="['/', 'sport', 'popularity']" class="link-dark rounded">Most popular sports</a></li>
             <li><a [routerLink]="['/', 'athlete', 'list']" [queryParams]="{ medal: 1, order: 'Weighting' }" class="link-dark rounded">Gold athletes</a></li>
+            <li><a [routerLink]="['/', 'athlete', 'list']" [queryParams]="{ medal: 2, order: 'Weighting' }" class="link-dark rounded">Silver athletes</a></li>
+            <li><a [routerLink]="['/', 'athlete', 'list']" [queryParams]="{ medal: 3, order: 'Weighting' }" class="link-dark rounded">Bronze athletes</a></li>
             <li><a [routerLink]="['/', 'country', 'medals', 'map']" class="link-dark rounded">Country Medals Map</a></li>
             <li><a [routerLink]="['/', 'athlete', 'detail', 18907]" class="link-dark rounded">Michael Phelps' medals</a></li>
             <li><a [routerLink]="['/', 'athlete', 'detail', 18088]" class="link-dark rounded">Chris Hoy's medals</a></li>
+            <li><a [routerLink]="['/', 'country', 'medals', 'capita']" class="link-dark rounded">Medals by capita</a></li>
           </ul>
         </div>
       </li>
@@ -42,9 +46,11 @@
         </button>
         <div class="collapse" id="country-collapse">
           <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+            <li><a [routerLink]="['/', 'country', 'leaderboards']" class="link-dark rounded">Leaderboards</a></li>
             <li><a [routerLink]="['/', 'country', 'medals']" class="link-dark rounded">Medals</a></li>
             <li><a [routerLink]="['/', 'country', 'athletes']" class="link-dark rounded">Athletes</a></li>
             <li><a [routerLink]="['/', 'country', 'medals', 'map']" class="link-dark rounded">Country Medals Map</a></li>
+            <li><a [routerLink]="['/', 'country', 'medals', 'capita']" class="link-dark rounded">Medals by capita</a></li>
           </ul>
         </div>
       </li>

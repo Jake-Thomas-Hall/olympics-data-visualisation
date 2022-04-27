@@ -9,6 +9,8 @@ import { CountryRoutingModule } from './country-routing.module';
 import { CountrySearchComponent } from './country-search/country-search.component';
 import { CountryAthleteListComponent } from './country-athlete-list/country-athlete-list.component';
 import { CountryAthletesComponent } from './country-athletes/country-athletes.component';
+import { CountryMedalsPerCapitaComponent } from './country-medals-per-capita/country-medals-per-capita.component';
+import { CountryLeaderboardsComponent } from './country-leaderboards/country-leaderboards.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,9 @@ import { CountryAthletesComponent } from './country-athletes/country-athletes.co
     CountryMapComponent,
     CountrySearchComponent,
     CountryAthleteListComponent,
-    CountryAthletesComponent
+    CountryAthletesComponent,
+    CountryMedalsPerCapitaComponent,
+    CountryLeaderboardsComponent
   ],
   imports: [
     CommonModule,

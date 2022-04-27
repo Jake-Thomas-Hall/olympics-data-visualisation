@@ -49,8 +49,6 @@ export class CountryMapComponent implements OnInit {
       )
     );
 
-    
-
     this.chart.appear(2000, 300);
 
     this.countryMapOptionsForm.valueChanges.subscribe(value => {
