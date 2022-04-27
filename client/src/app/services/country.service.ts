@@ -19,8 +19,8 @@ export class CountryService {
   getMedals(requestOptions: CountryMedalsRequest) {
     let params = new HttpParams();
     params = params.append('id', requestOptions.id);
-    if (requestOptions.type) {
-      params = params.append('type', requestOptions.type);
+    if (requestOptions.games) {
+      params = params.append('games', requestOptions.games);
     }
 
     return this.http.get<CountryMedalSummaryResponse>(`${AppConfigService.settings.apiEndpoint}country/medals`, {params: params});

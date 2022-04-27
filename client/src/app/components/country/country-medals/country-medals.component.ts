@@ -92,7 +92,7 @@ export class CountryMedalsComponent implements OnInit {
       const games = value.queryParamMap.get('games');
       this.games.setValue(games, {emitEvent: false});
 
-      this.countryService.getMedals({ id: this.routeId, type: games }).subscribe({
+      this.countryService.getMedals({ id: this.routeId, games: games }).subscribe({
         next: value => {
           this.countryMedalsResponse = value.data;
           this.series.data.setAll([]);
