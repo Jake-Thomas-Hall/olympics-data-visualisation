@@ -26,7 +26,7 @@ SQL database export, import this in order to have data to test with. Note that d
 
 ## Screenshots
 
-(NOTE: Live link will be edited in here once site has been assessed)
+https://ws326200-odm.remote.ac/
 
 ![image](https://user-images.githubusercontent.com/25041735/166089173-833d8507-170f-4a89-aaab-ae3586d9eb6a.png)
 ![image](https://user-images.githubusercontent.com/25041735/166089179-585709dc-631d-4891-a694-0031c39ba7e0.png)
